@@ -1,75 +1,78 @@
-iris.ui(function (self) {
-	"use strict";
+iris.ui(function(self) {
+  'use strict';
 
-	self.events('change');
+  self.events('change');
 
-	self.settings({
-		defaultText: '<value>',
-		class: ''
-	});
+  self.settings({
+    defaultText: '<value>',
+    class: ''
+  });
 
-	self.create = function() {
-		self.tmpl(iris.path.ui.editableLabel.html);
+  self.create = function() {
+    self.tmpl(iris.path.ui.editableLabel.html);
 
-		self.get().on('keypress', onKeyPress).
-				on('change', onChange).
-				on('mouseup', onMouseUp).
-				on('click', onClick).
-				addClass(self.setting('class'));
-	};
+    self.get().on('keypress', onKeyPress).
+      on('change', onChange).
+      on('mouseup', onMouseUp).
+      on('click', onClick).
+      addClass(self.setting('class'));
+  };
 
-	self.text = function(text) {
-		if (text !== undefined) {
-			self.get().val(text);
-			checkDefaultText();
-			resizeInput();
-		} else {
-			return self.get().val();
-		}
-		return self;
-	};
+  self.text = function(text) {
+    if (text !== undefined) {
+      self.get().val(text);
+      checkDefaultText();
+      resizeInput();
+    } else {
+      return self.get().val();
+    }
 
-	function onClick(e) {
-		e.stopPropagation();
-	}
+    return self;
+  };
 
-	function onKeyPress(e) {
-		var text = this.value + String.fromCharCode(e.keyCode);
-		var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(this.parentNode);
-		this.style.width = $text.outerWidth() + 'px';
-		$text.remove();
+  function onClick(e) {
+    e.stopPropagation();
+  }
 
-		if (e.keyCode === 13) {
-			this.blur();
-		}
-	}
+  function onKeyPress(e) {
+    var text = self.get().val() + String.fromCharCode(e.keyCode) + '.'; // add extra char '.' to comfortable edition
+    var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(self.get().parent());
+    self.get().css('width', $text.outerWidth() + 'px');
+    $text.remove();
 
-	function onChange() {
-		self.get().val( $.trim(self.get().val()) );
-		checkDefaultText();
-		resizeInput();
+    if (e.keyCode === 13) {
+      self.get().blur();
+    }
+  }
 
-		self.notify('change');
-	}
+  function onChange() {
+    self.get().val($.trim(self.get().val()));
 
-	function checkDefaultText() {
-		var defaultVal = self.get().val() === '' || self.get().val() === self.setting('defaultText');
-		if (defaultVal) {
-			self.get().val(self.setting('defaultText'));
-		}
-		self.get().toggleClass('defaultVal', defaultVal);
-	}
+    checkDefaultText();
+    resizeInput();
 
-	function resizeInput() {
-		var text = self.get().val();
-		var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(self.get().parent());
-		self.get().css('width', $text.outerWidth() + 'px');
-		$text.remove();
-	}
+    self.notify('change');
+  }
 
-	function onMouseUp(e) {
-		e.stopPropagation();
-		$(this).select();
-	}
+  function checkDefaultText() {
+    var defaultVal = self.get().val() === '' || self.get().val() === self.setting('defaultText');
+    if (defaultVal) {
+      self.get().val(self.setting('defaultText'));
+    }
+
+    self.get().toggleClass('defaultVal', defaultVal);
+  }
+
+  function resizeInput() {
+    var text = self.get().val();
+    var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(self.get().parent());
+    self.get().css('width', $text.outerWidth() + 'px');
+    $text.remove();
+  }
+
+  function onMouseUp(e) {
+    e.stopPropagation();
+    self.get().select();
+  }
 
 }, iris.path.ui.editableLabel.js);

@@ -4,6 +4,9 @@
   "description": "Cucumberly is a cucumber features editor but for \"Muggles\".",
   "main": "src/index.html",
   "scripts": {
+    "jshint": "./node_modules/jshint/bin/jshint src/iris src/js/init.js",
+    "jscs": "./node_modules/jscs/bin/jscs src/iris src/js/init.js",
+    "lint": "npm run jscs && npm run jshint",
     "start": "node_modules/.bin/nw .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,6 +39,9 @@
     "page-cache": false
   },
   "devDependencies": {
+    "jscs": "^2.1.1",
+    "jshint": "^2.8.0",
     "nw": "^0.12.3"
-  }
+  },
+  "js-flags": "--harmony"
 }
