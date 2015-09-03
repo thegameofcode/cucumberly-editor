@@ -24,9 +24,9 @@
     "frame": true,
     "toolbar": false,
     "position": "mouse",
-    "width": 1000,
+    "width": 1400,
     "min_width": 1000,
-    "height": 600,
+    "height": 700,
     "min_height": 600
   },
   "dependencies": {
