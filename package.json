@@ -2,13 +2,14 @@
   "name": "cucumberly-editor",
   "version": "0.0.1",
   "description": "Cucumberly is a cucumber features editor but for \"Muggles\".",
-  "main": "src/index.html",
+  "main": "dist/index.html",
   "scripts": {
     "jshint": "./node_modules/jshint/bin/jshint src/iris src/js/init.js",
     "jscs": "./node_modules/jscs/bin/jscs src/iris src/js/init.js",
     "lint": "npm run jscs && npm run jshint",
     "start": "node_modules/.bin/nw .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/.bin/gulp"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
   "homepage": "https://github.com/thegameofcode/cucumberly-editor#readme",
   "window": {
     "frame": true,
-    "toolbar": false,
+    "toolbar": true,
     "position": "mouse",
     "width": 1400,
     "min_width": 1000,
@@ -31,7 +32,9 @@
   },
   "dependencies": {
     "lodash": "^3.10.1",
-    "nedb": "^1.1.3"
+    "nedb": "^1.1.3",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
   },
   "webkit": {
     "plugin": false,
@@ -39,6 +42,8 @@
     "page-cache": false
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "jscs": "^2.1.1",
     "jshint": "^2.8.0",
     "nw": "^0.12.3"
