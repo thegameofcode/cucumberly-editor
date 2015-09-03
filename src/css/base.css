@@ -1,0 +1,26 @@
+.noMargins {
+    margin: 0;
+}
+
+input.editableLabel:hover{
+    background: rgba(0,0,0,0.2);
+}
+
+input.editableLabel:focus{
+    background: rgba(0,0,0,0.2);
+}
+
+.editableLabel {
+    border: 0;
+    background: none;
+    width: 60%;
+}
+
+.editableLabel.defaultVal {
+    border-bottom: 2px dotted #aaa;
+}
+
+
+.featureItem {
+    cursor: pointer;
+}
