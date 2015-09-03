@@ -13,17 +13,21 @@ iris.resource(function(self) {
   // Book
   //
 
+  var book;
+
   self.loadBook = function(callback) {
-    db.findOne({}, function(err, book) {
+    db.findOne({}, function(err, bookDb) {
       if (err) return callback(err);
 
-      if (book) {
+      if (bookDb) {
+        book = bookDb;
         callback(null, book);
       } else {
         console.log('Book not found, creating...');
         var defaultBook = {id: generateId(), title: '', description: '', episodes: []};
-        db.insert(defaultBook, function(err, book) {
+        db.insert(defaultBook, function(err, bookDb) {
           if (err) return callback(err);
+          book = bookDb;
           callback(null, book);
         });
       }
@@ -31,11 +35,9 @@ iris.resource(function(self) {
   };
 
   self.updateBook = function(data, callback) {
-    db.update({}, {$set: {title: data.title, description: data.description}}, function(err, numReplaced) {
-      if (err) return callback(err);
-      if (numReplaced != 1) return callback(new Error('Error updating book data'));
-      callback();
-    });
+    book.title = data.title;
+    book.description = data.description;
+    saveBook(callback);
   };
 
   //
@@ -43,16 +45,11 @@ iris.resource(function(self) {
   //
 
   self.createEpisode = function(data, callback) {
-    db.findOne({}, function(err, book) {
+    var newEpisode = {id: generateId(), name: data.name, features: []};
+    book.episodes.push(newEpisode);
+    saveBook(function(err) {
       if (err) return callback(err);
-      if (!book)  return callback(new Error('Book not found'));
-
-      var newEpisode = {id: generateId(), name: data.name, features: []};
-      db.update({}, {$push: {episodes: newEpisode}}, function(err, numReplaced) {
-        if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
-        callback(null, newEpisode);
-      });
+      callback(null, newEpisode);
     });
   };
 
@@ -62,27 +59,16 @@ iris.resource(function(self) {
 
       episode.name = data.name;
 
-      db.update({}, book, function(err, numReplaced) {
+      saveBook(function(err) {
         if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
         callback(null, episode);
       });
     });
   };
 
   self.removeEpisode = function(episodeId, callback) {
-    db.findOne({}, function(err, book) {
-      if (err) return callback(err);
-      if (!book)  return callback(new Error('Book not found'));
-
-      _.remove(book.episodes, {id: episodeId});
-
-      db.update({}, book, function(err, numReplaced) {
-        if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
-        callback(null);
-      });
-    });
+    _.remove(book.episodes, {id: episodeId});
+    saveBook(callback);
   };
 
   //
@@ -103,9 +89,8 @@ iris.resource(function(self) {
       var newFeature = {id: generateId(), name: data.name, description: data.description, scenarios: []};
       episode.features.push(newFeature);
 
-      db.update({}, book, function(err, numReplaced) {
+      saveBook(function(err) {
         if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
         callback(null, newFeature);
       });
     });
@@ -118,9 +103,8 @@ iris.resource(function(self) {
       feature.name = data.name;
       feature.description = data.description;
 
-      db.update({}, book, function(err, numReplaced) {
+      saveBook(function(err) {
         if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
         callback(null, feature);
       });
     });
@@ -131,12 +115,7 @@ iris.resource(function(self) {
       if (err) return callback(err);
 
       _.remove(episode.features, {id: featureId});
-
-      db.update({}, book, function(err, numReplaced) {
-        if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
-        callback(null);
-      });
+      saveBook(callback);
     });
   };
 
@@ -150,9 +129,8 @@ iris.resource(function(self) {
 
       var newScenario = {id: generateId(), name: data.name, steps: data.steps};
       feature.scenarios.push(newScenario);
-      db.update({}, book, function(err, numReplaced) {
+      saveBook(function(err) {
         if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
         callback(null, newScenario);
       });
     });
@@ -168,9 +146,8 @@ iris.resource(function(self) {
       scenario.name = data.name;
       scenario.steps = data.steps;
 
-      db.update({}, book, function(err, numReplaced) {
+      saveBook(function(err) {
         if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
         callback(null, scenario);
       });
     });
@@ -181,12 +158,7 @@ iris.resource(function(self) {
       if (err) return callback(err);
 
       _.remove(feature.scenarios, {id: scenarioId});
-
-      db.update({}, book, function(err, numReplaced) {
-        if (err) return callback(err);
-        if (numReplaced !== 1) return callback(new Error('Error updating book'));
-        callback(null);
-      });
+      saveBook(callback);
     });
   };
 
@@ -206,15 +178,9 @@ iris.resource(function(self) {
   }
 
   function getEpisode(episodeId, callback) {
-    db.findOne({}, function(err, book) {
-      if (err) return callback(err);
-      if (!book)  return callback(new Error('Book not found'));
-
-      var episode = _.find(book.episodes, {id: episodeId});
-      if (!episode) return callback(new Error('Episode not found'));
-
-      callback(null, book, episode);
-    });
+    var episode = _.find(book.episodes, {id: episodeId});
+    if (!episode) return callback(new Error('Episode not found'));
+    callback(null, book, episode);
   }
 
   function getFeature(episodeId, featureId, callback) {
@@ -225,6 +191,14 @@ iris.resource(function(self) {
       if (!feature) return callback(new Error('Feature not found'));
 
       callback(null, book, feature);
+    });
+  }
+
+  function saveBook(callback) {
+    db.update({_id: book._id}, book, function(err, numReplaced) {
+      if (err) return callback(err);
+      if (numReplaced !== 1) return callback(new Error('Error updating book'));
+      callback(null);
     });
   }
 
