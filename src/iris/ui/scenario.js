@@ -83,13 +83,8 @@ iris.ui(function(self) {
   }
 
   function updateScenario() {
-    self.get('infoSaved').toggleClass('hidden', true);
-    self.get('infoSaving').toggleClass('hidden', false).fadeIn();
-
-    book.updateScenario(episodeId, featureId, scenarioId, data(), function(err, result) {
+    book.updateScenario(episodeId, featureId, scenarioId, data(), function(err) {
       if (err) return alert(err);
-      self.get('infoSaving').toggleClass('hidden', true);
-      self.get('infoSaved').toggleClass('hidden', false).fadeIn();
     });
   }
 

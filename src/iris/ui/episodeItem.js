@@ -14,15 +14,11 @@ iris.ui(function(self) {
 
     var episode = self.setting('episode');
     self.ui('episodeName').text(episode.name);
-    iris.log('Creating episode ', episode.name);
     if (episode.features && episode.features.length > 0) {
       episode.features.forEach(function(feature) {
-        iris.log(' -> feature', feature);
         addFeatureItem(episode, feature);
       });
     }
-
-    self.ui('episodeName').text(self.setting('episode').name);
 
     self.get('btnAddFeature').on('click', onBtnAddFeatureClick);
     UIBtn.init(self.get());
@@ -53,7 +49,6 @@ iris.ui(function(self) {
   function onEpisodeChange() {
     book.updateEpisode(self.setting('episode').id, {name: self.ui('episodeName').text()}, function(err, result) {
       if (err) return alert('Error saving episode');
-      iris.log('Episode updated');
     });
   }
 
