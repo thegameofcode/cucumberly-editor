@@ -38,6 +38,10 @@ iris.path = {
     "step": {
       "html": "ui/step.html",
       "js": "ui/step.js"
+    },
+    "tableEditor": {
+      "html": "ui/tableEditor.html",
+      "js": "ui/tableEditor.js"
     }
   }
 }

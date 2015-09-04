@@ -86,9 +86,13 @@ iris.resource(function(self) {
   //
 
   self.getFeature = function(episodeId, featureId, callback) {
-    getFeature(episodeId, featureId, function(err, book, feature) {
+    self.loadBook(function(err) {
       if (err) return callback(err);
-      callback(null, feature);
+
+      getFeature(episodeId, featureId, function(err, book, feature) {
+        if (err) return callback(err);
+        callback(null, feature);
+      });
     });
   };
 

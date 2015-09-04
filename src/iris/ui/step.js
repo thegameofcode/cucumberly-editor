@@ -15,6 +15,8 @@ iris.ui(function(self) {
     self.get('input').val(self.setting('value')).on('keyup', onKeyUp).on('blur', onBlur).on('change', onChange);
     self.get('label').text(self.setting('label'));
 
+    self.ui('uiTableEditor', iris.path.ui.tableEditor.js);
+
   };
 
   self.data = function() {
