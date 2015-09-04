@@ -1,8 +1,16 @@
 <div class="card">
 	<div class="card-head card-head-lg style-default-dark">
+		<img src="img/avatar.png" alt="Avatar" style="height: 80px" />
 		<header><div data-id="bookTitle"></div></header>
 		<div class="text-default-light" style="line-height: normal;">
 			<div data-id="bookDes"></div>
+		</div>
+		<div class="headerbar-right">
+			<div class="header-nav header-nav-options">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+					<i class="fa fa-cloud-upload"></i> Save version
+				</button>
+			</div>
 		</div>
 	</div>
 	<div class="row noMargins">
@@ -14,7 +22,6 @@
 		<!--<div class="col-md-6">-->
 		<div class="col-md-9">
 			<div class="card-body style-default-bright">
-				<p data-id="infoSaving" class="hidden text-info"><i class="fa fa-spinner fa-pulse"></i> Loading book data...</p>
 				<div data-id="screens"></div>
 			</div>
 		</div>
@@ -26,5 +33,25 @@
 				</ul>
 			</div>
 		</div-->
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Save version</h4>
+				</div>
+				<div class="modal-body">
+					Do you really want save the changes as new version?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
