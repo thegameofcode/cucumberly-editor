@@ -2,11 +2,11 @@
     margin: 0;
 }
 
-input.editableLabel:hover{
+.editableLabel:hover{
     background: rgba(0,0,0,0.2);
 }
 
-input.editableLabel:focus{
+.editableLabel:focus{
     background: rgba(0,0,0,0.2);
 }
 

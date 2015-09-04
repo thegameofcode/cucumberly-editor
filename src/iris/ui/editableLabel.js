@@ -11,68 +11,48 @@ iris.ui(function(self) {
   self.create = function() {
     self.tmpl(iris.path.ui.editableLabel.html);
 
-    self.get().on('keypress', onKeyPress).
-      on('change', onChange).
+    self.get().
+      on('blur', onBlur).
       on('mouseup', onMouseUp).
-      on('click', onClick).
+      on('keypress', onKeyPress).
       addClass(self.setting('class'));
   };
 
   self.text = function(text) {
     if (text !== undefined) {
-      self.get().val(text);
+      self.get().text(text);
       checkDefaultText();
-      resizeInput();
     } else {
-      return self.get().val();
+      return self.get().text();
     }
 
     return self;
   };
 
-  function onClick(e) {
-    e.stopPropagation();
-  }
-
   function onKeyPress(e) {
-    var text = self.get().val() + String.fromCharCode(e.keyCode) + '.'; // add extra char '.' to comfortable edition
-    var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(self.get().parent());
-    self.get().css('width', $text.outerWidth() + 'px');
-    $text.remove();
-
     if (e.keyCode === 13) {
-      self.get().blur();
+      e.preventDefault();
+      this.blur();
     }
   }
 
-  function onChange() {
+  function onBlur() {
     self.get().val($.trim(self.get().val()));
-
     checkDefaultText();
-    resizeInput();
-
     self.notify('change');
   }
 
   function checkDefaultText() {
-    var defaultVal = self.get().val() === '' || self.get().val() === self.setting('defaultText');
+    var defaultVal = self.get().text() === '' || self.get().text() === self.setting('defaultText');
     if (defaultVal) {
-      self.get().val(self.setting('defaultText'));
+      self.get().text(self.setting('defaultText'));
     }
 
     self.get().toggleClass('defaultVal', defaultVal);
   }
 
-  function resizeInput() {
-    var text = self.get().val();
-    var $text = $('<span>').text(text).addClass(self.setting('class')).appendTo(self.get().parent());
-    self.get().css('width', $text.outerWidth() + 'px');
-    $text.remove();
-  }
-
   function onMouseUp(e) {
-    e.stopPropagation();
-    self.get().select();
+    document.execCommand('selectAll', false, null);
   }
 
 }, iris.path.ui.editableLabel.js);
