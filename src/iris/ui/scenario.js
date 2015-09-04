@@ -36,7 +36,26 @@ iris.ui(function(self) {
       }
     });
 
-    data();
+    var ciStatusClassName = 'style-primary';
+    switch (scenario.ciStatus) {
+      case book.CI_STATUS.SUCCESS:
+        ciStatusClassName = 'style-success';
+        break;
+      case book.CI_STATUS.ERROR:
+        ciStatusClassName = 'style-danger';
+        break;
+      case book.CI_STATUS.PENDING:
+        ciStatusClassName = 'style-warning';
+        break;
+    }
+    self.get('scenarioCard').addClass(ciStatusClassName);
+
+    if (scenario.tags) {
+      scenario.tags.forEach(function(tag) {
+        $('<img>').attr('src', 'img/scenario/tag/' + tag + '-' + scenario.ciStatus + '.png').
+            addClass('scenarioTag').appendTo(self.get('scenarioTags'));
+      });
+    }
 
     UIForm.init(self.get()); // position of floating labels TODO move to step UI
   }

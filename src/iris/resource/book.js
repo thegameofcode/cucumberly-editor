@@ -9,6 +9,13 @@ iris.resource(function(self) {
     autoload: true
   });
 
+  self.CI_STATUS = {
+    PENDING: 'pending',
+    SUCCESS: 'success',
+    ERROR: 'error',
+    NONE: 'none'
+  };
+
   //
   // Book
   //
@@ -45,7 +52,10 @@ iris.resource(function(self) {
   //
 
   self.createEpisode = function(data, callback) {
-    var newEpisode = {id: generateId(), name: data.name, features: []};
+    var newEpisode = {
+      id: generateId(), name: data.name, features: [],
+      ciStatus: self.CI_STATUS.NONE, tags:['android','ios','web','desktop']
+    };
     book.episodes.push(newEpisode);
     saveBook(function(err) {
       if (err) return callback(err);
@@ -86,7 +96,7 @@ iris.resource(function(self) {
     getEpisode(episodeId, function(err, book, episode) {
       if (err) return callback(err);
 
-      var newFeature = {id: generateId(), name: data.name, description: data.description, scenarios: []};
+      var newFeature = {id: generateId(), name: data.name, description: data.description, scenarios: [], ciStatus: self.CI_STATUS.PENDING};
       episode.features.push(newFeature);
 
       saveBook(function(err) {
@@ -127,7 +137,7 @@ iris.resource(function(self) {
     getFeature(episodeId, featureId, function(err, book, feature) {
       if (err) return callback(err);
 
-      var newScenario = {id: generateId(), name: data.name, steps: data.steps};
+      var newScenario = {id: generateId(), name: data.name, steps: data.steps, ciStatus: self.CI_STATUS.NONE};
       feature.scenarios.push(newScenario);
       saveBook(function(err) {
         if (err) return callback(err);
@@ -198,6 +208,12 @@ iris.resource(function(self) {
     db.update({_id: book._id}, book, function(err, numReplaced) {
       if (err) return callback(err);
       if (numReplaced !== 1) return callback(new Error('Error updating book'));
+
+      // https://github.com/louischatriot/nedb#compacting-the-database
+      //    Under the hood, NeDB's persistence uses an append-only format, meaning that all updates and deletes actually result in lines added at the end of the datafile.
+      // in order to simplify the db data edition, we compact the data file after each operation
+      db.persistence.compactDatafile();
+
       callback(null);
     });
   }

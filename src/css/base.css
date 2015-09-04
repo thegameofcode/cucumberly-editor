@@ -24,3 +24,15 @@ input.editableLabel:focus{
 .featureItem {
     cursor: pointer;
 }
+
+.scenarioTags {
+    float: right;
+    padding-right: 15px;
+    padding-bottom: 5px;
+}
+
+.scenarioTag {
+    width: 32px;
+    height: 32px;
+    margin-left: 5px;
+}

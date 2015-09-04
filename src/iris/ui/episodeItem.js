@@ -20,6 +20,17 @@ iris.ui(function(self) {
       });
     }
 
+    var ciStatusClassName = 'style-default-light';
+    switch (episode.ciStatus) {
+      case book.CI_STATUS.SUCCESS:
+        ciStatusClassName = 'style-success';
+        break;
+      case book.CI_STATUS.ERROR:
+        ciStatusClassName = 'style-danger';
+        break;
+    }
+    self.get('accordionItem').addClass(ciStatusClassName);
+
     self.get('btnAddFeature').on('click', onBtnAddFeatureClick);
     UIBtn.init(self.get());
   };

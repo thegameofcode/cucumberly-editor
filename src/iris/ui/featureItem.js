@@ -9,6 +9,18 @@ iris.ui(function(self) {
     iris.on('featureNameChange', onFeatureNameChange);
     self.inflate(self.settings());
 
+    var feature = self.setting('feature');
+    var ciStatusClassName = 'text-default';
+    switch (feature.ciStatus) {
+      case book.CI_STATUS.SUCCESS:
+        ciStatusClassName = 'text-success';
+        break;
+      case book.CI_STATUS.ERROR:
+        ciStatusClassName = 'text-danger';
+        break;
+    }
+    self.get().addClass(ciStatusClassName);
+
     self.get('btnRemove').on('click', onRemove);
   };
 
