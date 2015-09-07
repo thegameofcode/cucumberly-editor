@@ -10,6 +10,8 @@
     "bootstrap": "~3.3.5",
     "react": "~0.13.3",
     "react-router": "~0.13.3",
-    "react-bootstrap": "~0.25.1"
+    "react-bootstrap": "~0.25.1",
+    "lodash": "~3.10.1",
+    "nedb": "*"
   }
 }

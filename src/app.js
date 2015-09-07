@@ -1,6 +1,6 @@
 /*var Router = require('react-router');
-var Route = Router.Route;
-*/
+ var Route = Router.Route;
+ */
 
 let Router = ReactRouter;
 let Route = Router.Route;
@@ -8,29 +8,31 @@ let RouteHandler = Router.RouteHandler;
 let DefaultRoute = Router.DefaultRoute;
 
 let Subjects = React.createClass({
-	render: () => <h2>Subjects</h2>
+  render: () => <h2>Subjects</h2>
 });
 
-let App = React.createClass({
-	render () {
-		return (
-			<div>
-				<h1>App</h1>
-				<RouteHandler/>
-			</div>
-		)
-	}
-});
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>App</h1>
+        <RouteHandler/>
+      </div>
+    );
+  }
+}
 
 // declare our routes and their hierarchy
 let routes = (
-	<Route handler={App}>
-		<DefaultRoute handler={Editor}/>
-		<Route path="editor" handler={Editor}/>
-		<Route path="subjects" handler={Subjects}/>
-	</Route>
+  <Route handler={App}>
+    <DefaultRoute handler={Editor}/>
+    <Route path='editor' handler={Editor}>
+      <Route path='episode/:episodeId/feature/:featureId' handler={Feature} />
+    </Route>
+    <Route path='subjects' handler={Subjects}/>
+  </Route>
 );
 
 Router.run(routes, Router.HashLocation, (Root) => {
-	React.render(<Root/>, document.body);
+  React.render(<Root/>, document.body);
 });
