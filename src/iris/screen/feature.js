@@ -58,13 +58,22 @@ iris.ui(function(self) {
   }
 
   function addScenario() {
-    var scenarioDefault = {name: 'New scenario', steps: {given: [''], when: [''], then: ['']}};
+    var scenarioDefault = {
+      name: 'New scenario',
+      steps: {
+        given: [{value: '', ci: {status: book.CI_STATUS.NONE}}],
+        when: [{value: '', ci: {status: book.CI_STATUS.NONE}}],
+        then: [{value: '', ci: {status: book.CI_STATUS.NONE}}]
+      }
+    };
+
     book.createScenario(episodeId, featureId, scenarioDefault, function(err, scenario) {
       self.ui('scenarios', iris.path.ui.scenario.js, {
         episodeId: episodeId,
         featureId: featureId,
         scenario: scenario
       }, self.APPEND);
+
       $('html, body').animate({scrollTop: $(document).height() - $(window).height()});
     });
   }

@@ -1,22 +1,30 @@
-<div>
-	<button data-id="btnAddTable" class="btn btn-default btn-xs" type="button">Add table</button>
+<div data-id="tableEditor" class="hidden margin-bottom-xxl">
 
-	<div data-id="tableEditor" class="hidden">
-		<button data-id="btnAddColumn" class="btn btn-default" type="button">Add Column</button>
-		<button class="btn btn-default" data-id="btnAddRow" type="button">Add Row</button><br/><br/>
+	<div class="row">
+		<div class="col-md-11">
 
-		<table class="table">
-			<thead>
-			<tr data-id="tableHead">
-				<td><span contenteditable="true">Column name</span></td>
-			</tr>
-			</thead>
-			<tbody data-id="tableBody">
-			<tr>
-				<td><span contenteditable="true">Value</span></td>
-			</tr>
-			</tbody>
-		</table>
+			<table class="table table-striped table-bordered">
+				<thead data-id="tableHead">
+				<tr></tr>
+				</thead>
+				<tbody data-id="tableBody">
+				</tbody>
+			</table>
 
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-default btn-floating-action btn-xs" data-id="btnAddColumn" type="button" data-toggle="tooltip" data-placement="top" title="Add column">
+				<i class="fa fa-plus"></i>
+			</button>
+		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-default btn-floating-action btn-xs" data-id="btnAddRow" type="button" data-toggle="tooltip" data-placement="right" title="Add row">
+				<i class="fa fa-plus"></i>
+			</button>
+		</div>
+	</div>
+
 </div>

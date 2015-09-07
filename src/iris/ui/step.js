@@ -6,6 +6,7 @@ iris.ui(function(self) {
   self.settings({
     label: 'label',
     value: '',
+    table: null,
     stepName: ''
   });
 
@@ -15,12 +16,34 @@ iris.ui(function(self) {
     self.get('input').val(self.setting('value')).on('keyup', onKeyUp).on('blur', onBlur).on('change', onChange);
     self.get('label').text(self.setting('label'));
 
-    self.ui('uiTableEditor', iris.path.ui.tableEditor.js);
+    self.ui('uiTableEditor', iris.path.ui.tableEditor.js).on('change', onChange);
 
+    var table = self.setting('table');
+    if (table && table.length > 1) {
+      self.get('btnAddTable').hide();
+      self.ui('uiTableEditor').setTableData(self.setting('table'));
+      self.ui('uiTableEditor').get().removeClass('hidden');
+    }
+
+    self.get().find('[data-toggle="tooltip"]').tooltip();
+    self.get('btnAddTable').on('click', onAddTable);
   };
 
   self.data = function() {
-    return {stepName: self.setting('stepName'), value: self.get('input').val()};
+    var table = self.ui('uiTableEditor').getTableData();
+
+    var step = {
+      stepName: self.setting('stepName'),
+      value: {
+        value: self.get('input').val()
+      }
+    };
+
+    if (table) {
+      step.value.table = table;
+    }
+
+    return step;
   };
 
   self.focus = function() {
@@ -42,6 +65,11 @@ iris.ui(function(self) {
 
   function onChange() {
     self.notify('stepChange', self);
+  }
+
+  function onAddTable() {
+    self.get('btnAddTable').hide();
+    self.ui('uiTableEditor').init().get().removeClass('hidden');
   }
 
 }, iris.path.ui.step.js);

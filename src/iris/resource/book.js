@@ -141,7 +141,7 @@ iris.resource(function(self) {
     getFeature(episodeId, featureId, function(err, book, feature) {
       if (err) return callback(err);
 
-      var newScenario = {id: generateId(), name: data.name, steps: data.steps, ciStatus: self.CI_STATUS.NONE};
+      var newScenario = {id: generateId(), name: data.name, steps: data.steps, ci: {status: self.CI_STATUS.NONE}};
       feature.scenarios.push(newScenario);
       saveBook(function(err) {
         if (err) return callback(err);

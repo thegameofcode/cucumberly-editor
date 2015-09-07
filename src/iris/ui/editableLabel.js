@@ -5,7 +5,8 @@ iris.ui(function(self) {
 
   self.settings({
     defaultText: '<value>',
-    class: ''
+    class: '',
+    text: ''
   });
 
   self.create = function() {
@@ -16,6 +17,8 @@ iris.ui(function(self) {
       on('mouseup', onMouseUp).
       on('keypress', onKeyPress).
       addClass(self.setting('class'));
+
+    self.text(self.setting('text'));
   };
 
   self.text = function(text) {

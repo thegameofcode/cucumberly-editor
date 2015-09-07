@@ -70,11 +70,12 @@ iris.ui(function(self) {
     newStepUi.focus();
   }
 
-  function createStep(stepName, label, val) {
+  function createStep(stepName, label, stepVal) {
     var stepUi = self.ui('steps', iris.path.ui.step.js, {
       stepName: stepName,
       label: label,
-      value: val
+      value: stepVal.value,
+      table: stepVal.table
     }, self.APPEND);
 
     stepUi.on('newStep', onNewStep);
