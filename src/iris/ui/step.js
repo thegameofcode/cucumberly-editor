@@ -4,24 +4,28 @@ iris.ui(function(self) {
   self.events('newStep', 'stepChange');
 
   self.settings({
-    label: 'label',
-    value: '',
-    table: null,
-    stepName: ''
+    label: '',
+    stepName: '',
+    step: null
   });
 
   self.create = function() {
     self.tmpl(iris.path.ui.step.html);
 
-    self.get('input').val(self.setting('value')).on('keyup', onKeyUp).on('blur', onBlur).on('change', onChange);
+    var step = self.setting('step');
+    if (!step) {
+      step = {value: '', table: null, ci: {status: 'none'}};
+    }
+
+    self.get('input').val(step.value).on('keyup', onKeyUp).on('blur', onBlur).on('change', onChange);
     self.get('label').text(self.setting('label'));
 
     self.ui('uiTableEditor', iris.path.ui.tableEditor.js).on('change', onChange);
 
-    var table = self.setting('table');
+    var table = step.table;
     if (table && table.length > 1) {
       self.get('btnAddTable').hide();
-      self.ui('uiTableEditor').setTableData(self.setting('table'));
+      self.ui('uiTableEditor').setTableData(step.table);
       self.ui('uiTableEditor').get().removeClass('hidden');
     }
 
