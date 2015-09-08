@@ -4,6 +4,7 @@ iris.ui(function (self) {
 	self.events('change');
 
 	var numCols = 0;
+	var editableLabels = [];
 
 	self.create = function() {
 		self.tmpl(iris.path.ui.tableEditor.html);
@@ -31,35 +32,41 @@ iris.ui(function (self) {
 		});
 	}
 
-	function addRow(text) {
+	function addRow(rowValues) {
 		var $tr = $('<tr>');
 		self.get('tableBody').append($tr);
-		for (var i = 0; i < numCols+1; i++) {
-			if (i == 0) {
 
-				var $td = $('<td class="text-center" style="width: 30px;"></td>').appendTo($tr);
+		var $td = $('<td class="text-center" style="width: 30px;"></td>').appendTo($tr);
 
-				// skip first row
-				if ($tr.index() !== 0) {
-					var $btnRemoveRow = $('<a data-id="btnRemove" class="btn btn-flat ink-reaction"><i class="fa fa-trash"></i></a>').appendTo($td);
-					$btnRemoveRow.on('click', onRemoveRow);
-				}
+		if ($tr.index() > 0) {
+			var $btnRemoveRow = $('<a data-id="btnRemove" class="btn btn-flat ink-reaction"><i class="fa fa-trash"></i></a>').appendTo($td);
+			$btnRemoveRow.on('click', onRemoveRow);
+		}
 
-			} else {
-				var params = ['Row value', $tr];
+		for (var i = 0; i < numCols; i++) {
+			var params = ['Row value', $tr];
 
-				if (text) {
-					params.push(text[i]);
-				}
-
-				addEditableCell.apply(this, params);
+			if (rowValues) {
+				params.push(rowValues[i]);
 			}
+
+			addEditableCell.apply(this, params);
 		}
 	}
 
-	function addCol(text) {
+	function addCol(headerLabel) {
+		var $tr = self.get('tableHead').find('tr');
+		if ($tr.size() === 0) {
+			$tr = $('<tr>').appendTo(self.get('tableHead'));
+		}
+
+		if ($tr.children().length === 0) {
+			$('<td style="width: 30px;"></td>').appendTo($tr);
+		}
+
 		numCols++;
-		var $container = addEditableCell('Column name', self.get('tableHead').find('tr'), text);
+
+		var $container = addEditableCell('Column name', $tr, headerLabel);
 
 		if (numCols > 1) {
 			$container.append($('<a data-id="btnRemove" class="btn btn-flat ink-reaction stick-top-right"><i class="fa fa-trash"></i></a>').on('click', onRemoveCol));
@@ -74,6 +81,8 @@ iris.ui(function (self) {
 		self.get().find('tr td:nth-child(' + colIdx + ')').each(function() {
 			$(this).remove();
 		});
+
+		numCols--;
 
 		self.notify('change');
 	}
@@ -97,6 +106,8 @@ iris.ui(function (self) {
 
 		editableText.on('change', onCellChange);
 
+		editableLabels.push(editableText);
+
 		return $container;
 	}
 
@@ -113,14 +124,16 @@ iris.ui(function (self) {
 	self.setTableData = function(data) {
 		if (!data || data.length < 2) return;
 
-		var i;
 		var header = data[0];
+		var rows = data.slice(1);
+		var i;
+
 		for (i = 0; i < header.length; i++) {
 			addCol(header[i]);
 		}
 
-		for (i = 1; i < data.length; i++) {
-			addRow(data[i]);
+		for (i = 0; i < rows.length; i++) {
+			addRow(rows[i]);
 		}
 
 		return self;
@@ -131,7 +144,9 @@ iris.ui(function (self) {
 
 		self.get(dataId).find('tr').each(function(idx, tr) {
 			var row = [];
-			$(tr).find('td span').each(function(idx, span) {
+			var $tr = $(tr);
+
+			$tr.find('td span').each(function(idx, span) {
 				row.push($(span).text());
 			});
 			values.push(row);
@@ -139,5 +154,18 @@ iris.ui(function (self) {
 
 		return values;
 	}
+
+	self.clear = function() {
+		numCols = 0;
+
+		for (var i = 0; i < editableLabels.length; i++) {
+			editableLabels[i].destroyUI();
+		}
+		editableLabels = [];
+		self.get('tableBody').empty();
+		self.get('tableHead').empty();
+
+		return self;
+	};
 
 }, iris.path.ui.tableEditor.js);
