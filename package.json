@@ -22,7 +22,7 @@
   "homepage": "https://github.com/thegameofcode/cucumberly-editor#readme",
   "window": {
     "frame": true,
-    "toolbar": false,
+    "toolbar": true,
     "position": "mouse",
     "width": 1400,
     "min_width": 1000,

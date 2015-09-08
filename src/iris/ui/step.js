@@ -24,14 +24,13 @@ iris.ui(function(self) {
 
     var table = step.table;
     if (table && table.length > 1) {
-      self.ui('uiTableEditor').setTableData(step.table).get().toggleClass('hidden', false);
-      self.get('btnAddTable').toggleClass('hidden', true);
-      self.get('btnRemoveTable').toggleClass('hidden', false);
+      self.get('btnAddTable').hide();
+      self.ui('uiTableEditor').setTableData(step.table);
+      self.ui('uiTableEditor').get().removeClass('hidden');
     }
 
     self.get().find('[data-toggle="tooltip"]').tooltip();
     self.get('btnAddTable').on('click', onAddTable);
-    self.get('btnRemoveTable').on('click', onRemoveTable);
   };
 
   self.data = function() {
@@ -73,16 +72,8 @@ iris.ui(function(self) {
   }
 
   function onAddTable() {
-    self.get('btnAddTable').toggleClass('hidden', true);
-    self.get('btnRemoveTable').toggleClass('hidden', false);
-    self.ui('uiTableEditor').init().get().toggleClass('hidden', false);
-  }
-
-  function onRemoveTable() {
-    self.get('btnAddTable').toggleClass('hidden', false);
-    self.get('btnRemoveTable').toggleClass('hidden', true);
-    self.ui('uiTableEditor').clear().get().toggleClass('hidden', true);
-    onChange();
+    self.get('btnAddTable').hide();
+    self.ui('uiTableEditor').init().get().removeClass('hidden');
   }
 
 }, iris.path.ui.step.js);
