@@ -7,7 +7,7 @@
 		</div>
 		<div class="headerbar-right">
 			<div class="header-nav header-nav-options">
-				<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#saveVersionModal">
 					<i class="fa fa-cloud-upload"></i> Save version
 				</button>
 			</div>
@@ -37,7 +37,7 @@
 
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="saveVersionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -45,11 +45,12 @@
 					<h4 class="modal-title" id="myModalLabel">Save version</h4>
 				</div>
 				<div class="modal-body">
-					Do you really want save the changes as new version?
+					Do you really want save the changes as a new version?
+					<input data-id="dirChooser" style="display: none;" type="file" nwdirectory />
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+					<button type="button" class="btn btn-primary" data-id="btnSaveChanges">Save changes</button>
 				</div>
 			</div>
 		</div>

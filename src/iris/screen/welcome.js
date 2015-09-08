@@ -1,6 +1,7 @@
 iris.screen(function(self) {
 
   var bookResource = iris.resource(iris.path.resource.book.js);
+  var bookManager = require('./manager/book');
 
   self.create = function() {
     self.tmpl(iris.path.screen.welcome.html);
@@ -15,11 +16,13 @@ iris.screen(function(self) {
     self.ui('bookDes', iris.path.ui.editableLabel.js, {defaultText: 'Book Description'}).on('change', onBookChange);
 
     bookResource.loadBook(onLoadBook);
+
+    self.get('dirChooser').on('change', onDirSelected);
+    self.get('btnSaveChanges').on('click', onSaveChanges);
   };
 
   function onLoadBook(err, book) {
     if (err) return alert('Error loading book data');
-    iris.log('book ->', book);
     self.ui('bookTitle').text(book.title);
     self.ui('bookDes').text(book.description);
     self.ui('episodeMenu').setEpisodes(book.episodes);
@@ -33,6 +36,16 @@ iris.screen(function(self) {
       if (err) return alert('Error updating book data');
       iris.log('Book updated');
     });
+  }
+
+  function onSaveChanges() {
+    self.get('dirChooser').trigger('click');
+  }
+
+  function onDirSelected() {
+    $('#saveVersionModal').modal('hide');
+    var dirPath = this.value;
+    bookManager.saveBook(dirPath);
   }
 
 }, iris.path.screen.welcome.js);
