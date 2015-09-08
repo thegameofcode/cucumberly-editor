@@ -130,11 +130,11 @@ class BookDb {
   // Scenarios
   //
 
-  createScenario(episodeId, featureId, data, callback) {
+  createScenario(episodeId, featureId, callback) {
     this.getFeature(episodeId, featureId, (err, feature) => {
       if (err) return callback(err);
 
-      let newScenario = {id: this._generateId(), name: data.name, steps: data.steps, ci: {status: this.CI_STATUS.NONE}};
+      let newScenario = {id: this._generateId(), name: 'scenario name', steps: {}};
       feature.scenarios.push(newScenario);
       this._saveBook((err) => {
         if (err) return callback(err);

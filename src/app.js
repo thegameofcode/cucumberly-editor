@@ -13,9 +13,18 @@ let Subjects = React.createClass({
 
 class App extends React.Component {
   render() {
+    let Navbar = ReactBootstrap.Navbar;
+    let Nav = ReactBootstrap.Nav;
+    let NavItem = ReactBootstrap.NavItem;
+
     return (
       <div>
-        <h1>App</h1>
+        <Navbar brand='Cucumberly' inverse toggleNavKey={0}>
+          <Nav activeKey={1}>
+            <NavItem eventKey={1} href='#/editor'>Editor</NavItem>
+            <NavItem eventKey={3} disabled>Subjects</NavItem>
+          </Nav>
+        </Navbar>
         <RouteHandler/>
       </div>
     );

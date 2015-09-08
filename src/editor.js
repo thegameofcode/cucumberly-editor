@@ -28,17 +28,18 @@ class EpisodeList extends BaseComponent {
   }
 
   render() {
+    let Col = ReactBootstrap.Col;
     let Button = ReactBootstrap.Button;
     let episodeItems = this.state.episodes.map((episode) =>
         <FeatureList episode={episode} />
     );
 
     return (
-      <div>
+      <Col md={3}>
         <h3>Episodes</h3>
         <div>{episodeItems}</div>
         <Button onClick={this.newEpisode}>New Episode</Button>
-      </div>
+      </Col>
     );
   }
 }
@@ -61,17 +62,21 @@ class FeatureList extends BaseComponent {
 
   render() {
     let Button = ReactBootstrap.Button;
+    let Panel = ReactBootstrap.Panel;
+
     let featureItems = this.state.features.map((feature) => {
       return <li><a href={'#/editor/episode/' + this.props.episode.id + '/feature/' + feature.id}>{feature.name}</a></li>
     });
 
+    const title = (
+      <h3>{this.props.episode.name}</h3>
+    );
+
     return (
-      <div>
-        <h3>Features</h3>
+      <Panel header={title}>
         <ul>{featureItems}</ul>
-        <span>{this.props.episode.name}</span>
         <Button onClick={this.newFeature}>New Feature</Button>
-      </div>
+      </Panel>
     );
   }
 }
@@ -83,52 +88,85 @@ FeatureList.propTypes = {
 class Feature extends BaseComponent {
   constructor(props) {
     super(props);
-    var featureId = this.props.params.featureId;
-    this.state = {feature: {id: featureId, name: 'Feature name', scenarios: []}};
+    this.state = {feature: {name: 'Feature name', scenarios: []}};
   }
 
   render() {
+    let Col = ReactBootstrap.Col;
+
+    let episodeId = this.props.params.episodeId;
+    let featureId = this.props.params.featureId;
+
+    return (
+      <Col md={8}>
+        <h3>{this.state.feature.name}</h3>
+        <ScenarioList episodeId={episodeId} featureId={featureId} />
+      </Col>
+    );
+  }
+}
+
+class ScenarioList extends BaseComponent {
+  constructor(props) {
+    super(props);
+    super.bindMethods('newScenario');
+
+    this.state = {scenarios: []};
+    books.getFeature(this.props.episodeId, this.props.featureId, (err, feature) => {
+      let scenarios = feature.scenarios;
+      this.setState({scenarios});
+    });
+  }
+
+  newScenario() {
+    books.createScenario(this.props.episodeId, this.props.featureId, (err, scenario) => {
+      let scenarios = this.state.scenarios;
+      scenarios.push(scenario);
+      this.setState({scenarios});
+    });
+  }
+
+  render() {
+    let Button = ReactBootstrap.Button;
+    let Panel = ReactBootstrap.Panel;
+    let Input = ReactBootstrap.Input;
+
+    let scenarioItems = this.state.scenarios.map((scenario) => {
+      return (
+        <Panel header={scenario.name}>
+          <form>
+            <Input type='text' label='Given' placeholder='Enter text' />
+            <Input type='text' label='When' placeholder='Enter text' />
+            <Input type='text' label='Then' placeholder='Enter text' />
+          </form>
+        </Panel>
+      );
+    });
+
     return (
       <div>
-        <h3>Feature {this.state.feature.id}</h3>
+        <h3>Scenarios</h3>
+        {scenarioItems}
+        <Button onClick={this.newScenario}>New Scenario</Button>
       </div>
     );
   }
 }
 
-/*let ScenarioList = React.createClass({
-  getInitialState() {
-    return {scenarios: []};
-  },
+ScenarioList.propTypes = {
+  episodeId: React.PropTypes.string.isRequired,
+  scenarioId: React.PropTypes.string.isRequired
+};
 
-  newScenario() {
-    let scenarios = this.state.scenarios;
-    scenarios.push({name: 'new scenario'});
-    this.setState({scenarios});
-  },
-
+class Editor extends React.Component {
   render() {
-    let Button = ReactBootstrap.Button;
-    let scenarioItems = this.state.scenarios.map((scenario) => <li>{scenario.name}</li>);
+    let Col = ReactBootstrap.Col;
 
     return (
-      <div>
-        <h3>Scenarios</h3>
-        <ul>{scenarioItems}</ul>
-        <Button onClick={this.newScenario}>New Scenario</Button>
-      </div>
-    );
-  }
-});*/
-
-let Editor = React.createClass({
-  render() {
-    return (
-      <div>
-        <h2>Editor</h2>
+      <Col md={12}>
         <EpisodeList />
         <RouteHandler/>
-      </div>
+      </Col>
     );
   }
-});
+}
