@@ -1,0 +1,28 @@
+Feature: {{name}}
+In order to {{description.motivation}}
+As a {{description.beneficiary}}
+I want to {{description.expectedBehaviour}}
+{% for scenario in scenarios %}
+Scenario: {{scenario.name}}
+  {%- for givenStep in scenario.steps.given %}
+  {% if loop.index0 == 0 %}Given {% else %}And {% endif -%}
+  {{givenStep.value}}
+  {%- for row in givenStep.table %}
+    | {% for value in row %}{{value}} | {% endfor -%}
+  {% endfor -%}
+  {%- endfor -%}
+  {%- for whenStep in scenario.steps.when %}
+  {% if loop.index0 == 0 %}When {% else %}And {% endif -%}
+    {{whenStep.value}}
+    {%- for row in whenStep.table %}
+    | {% for value in row %}{{value}} | {% endfor -%}
+    {% endfor -%}
+  {%- endfor -%}
+  {%- for thenStep in scenario.steps.then %}
+  {% if loop.index0 == 0 %}Then {% else %}And {% endif -%}
+    {{thenStep.value}}
+    {%- for row in thenStep.table %}
+    | {% for value in row %}{{value}} | {% endfor -%}
+  {% endfor -%}
+  {%- endfor %}
+{% endfor %}
