@@ -1,22 +1,16 @@
-/*var Router = require('react-router');
- var Route = Router.Route;
- */
+import React, { Component } from 'react';
+import Router from 'react-router';
 
-let Router = ReactRouter;
-let Route = Router.Route;
-let RouteHandler = Router.RouteHandler;
-let DefaultRoute = Router.DefaultRoute;
+import Editor from './editor/Editor';
+import Feature from './editor/Feature';
+import Subjects from './subjects/Subjects';
 
-let Subjects = React.createClass({
-  render: () => <h2>Subjects</h2>
-});
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-class App extends React.Component {
+let { Route, RouteHandler, DefaultRoute } = Router;
+
+class App extends Component {
   render() {
-    let Navbar = ReactBootstrap.Navbar;
-    let Nav = ReactBootstrap.Nav;
-    let NavItem = ReactBootstrap.NavItem;
-
     return (
       <div>
         <Navbar brand='Cucumberly' inverse toggleNavKey={0}>

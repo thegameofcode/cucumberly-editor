@@ -9,7 +9,7 @@
     "lint": "npm run jscs && npm run jshint",
     "start": "node_modules/.bin/nw .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/gulp babel"
+    "build": "node_modules/.bin/gulp build"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,11 @@
     "min_height": 600
   },
   "dependencies": {
+    "lodash": "^3.10.1",
+    "nedb": "^1.1.4",
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.25.1",
+    "react-router": "^0.13.3"
   },
   "webkit": {
     "plugin": false,
@@ -38,12 +43,14 @@
     "page-cache": false
   },
   "devDependencies": {
+    "nw": "^0.12.3",
+    "babelify": "^6.3.0",
+    "browserify": "^11.0.1",
+    "vinyl-source-stream": "^1.1.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
     "gulp-watch": "^4.3.5",
     "jscs": "^2.1.1",
-    "jshint": "^2.8.0",
-    "nw": "^0.12.3"
+    "jshint": "^2.8.0"
   },
   "js-flags": "--harmony"
 }

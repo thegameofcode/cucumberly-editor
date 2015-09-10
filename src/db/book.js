@@ -1,12 +1,11 @@
+import _ from 'lodash';
+import Nedb from 'nedb';
+
 class BookDb {
 
   constructor() {
-    //this.db =  new Nedb({
-    //  filename: require('path').join(require('nw.gui').App.dataPath, 'cucumberly.db'), // TODO use the no browser version instead LocalStorage
-    //  autoload: true
-    //});
     this.db =  new Nedb({
-      filename: 'cucumberly',
+      filename: 'cucumberly.db',//require('path').join(require('nw.gui').App.dataPath, 'cucumberly.db'), // TODO use the no browser version instead LocalStorage
       autoload: true
     });
   }
@@ -201,3 +200,5 @@ class BookDb {
   }
 
 }
+
+export default new BookDb();
