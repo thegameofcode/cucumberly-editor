@@ -27,10 +27,10 @@ class App extends Component {
 
 // declare our routes and their hierarchy
 let routes = (
-  <Route handler={App}>
+  <Route handler={App} path="/">
     <DefaultRoute handler={Editor}/>
     <Route path='editor' handler={Editor}>
-      <Route path='episode/:episodeId/feature/:featureId' handler={Feature} />
+      <Route name='feature' path='episode/:episodeId/feature/:featureId' handler={Feature} />
     </Route>
     <Route path='subjects' handler={Subjects}/>
   </Route>

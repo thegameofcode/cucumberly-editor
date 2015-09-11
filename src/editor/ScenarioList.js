@@ -10,10 +10,6 @@ export default class ScenarioList extends BaseComponent {
     super.bindMethods('newScenario');
 
     this.state = {scenarios: []};
-    books.getFeature(this.props.episodeId, this.props.featureId, (err, feature) => {
-      let scenarios = feature.scenarios;
-      this.setState({scenarios});
-    });
   }
 
   newScenario() {
@@ -24,8 +20,22 @@ export default class ScenarioList extends BaseComponent {
     });
   }
 
-  render() {
+  loadScenarios(episodeId, featureId) {
+    books.getFeature(episodeId, featureId, (err, feature) => {
+      let scenarios = feature.scenarios;
+      this.setState({scenarios});
+    });
+  }
 
+  componentDidMount() {
+    this.loadScenarios(this.props.episodeId, this.props.featureId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.loadScenarios(nextProps.episodeId, nextProps.featureId);
+  }
+
+  render() {
     let scenarioItems = this.state.scenarios.map((scenario) => {
       return (
         <Panel header={scenario.name}>
@@ -50,5 +60,5 @@ export default class ScenarioList extends BaseComponent {
 
 ScenarioList.propTypes = {
   episodeId: React.PropTypes.string.isRequired,
-  scenarioId: React.PropTypes.string.isRequired
+  featureId: React.PropTypes.string.isRequired
 };

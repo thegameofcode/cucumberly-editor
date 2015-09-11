@@ -1,8 +1,10 @@
 import React from 'react';
 import books from '../db/book';
 import BaseComponent from '../BaseComponent';
-
+import Router from 'react-router';
 import { Panel, Button } from 'react-bootstrap';
+
+let { Link } = Router;
 
 export default class FeatureList extends BaseComponent {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class FeatureList extends BaseComponent {
   render() {
 
     let featureItems = this.state.features.map((feature) => {
-      return <li><a href={'#/editor/episode/' + this.props.episode.id + '/feature/' + feature.id}>{feature.name}</a></li>
+      return <li><Link to='feature' params={{episodeId: this.props.episode.id, featureId: feature.id}}>{feature.name}</Link></li>
     });
 
     const title = (
