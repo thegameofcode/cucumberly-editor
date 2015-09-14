@@ -3,10 +3,9 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 
-const DIST_PATH = 'dist/build';
-
 var paths = {
-  src: 'src/**/*.js'
+  src: 'src/**/*.js',
+  dist: 'dist/build'
 };
 
 var vendors = [
@@ -25,7 +24,7 @@ gulp.task('vendors', function () {
 
   stream.bundle()
       .pipe(source('vendors.js'))
-      .pipe(gulp.dest(DIST_PATH));
+      .pipe(gulp.dest(paths.dist));
 
   return stream;
 });
@@ -41,9 +40,8 @@ gulp.task('app', function() {
 
   return stream.bundle()
     .pipe(source('cucumberly.js'))
-    .pipe(gulp.dest(DIST_PATH));
+    .pipe(gulp.dest(paths.dist));
 });
-
 
 gulp.task('build', ['vendors', 'app']);
 

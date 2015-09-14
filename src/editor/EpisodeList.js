@@ -28,7 +28,7 @@ export default class EpisodeList extends BaseComponent {
 
   render() {
     let episodeItems = this.state.episodes.map((episode) =>
-        <FeatureList episode={episode} />
+        <FeatureList key={`episode_${episode.id}`} episode={episode} />
     );
 
     return (

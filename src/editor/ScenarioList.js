@@ -1,8 +1,9 @@
 import React from 'react';
 import books from '../db/book';
 import BaseComponent from '../BaseComponent';
+import Scenario from './Scenario';
 
-import { Panel, Button, Input } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export default class ScenarioList extends BaseComponent {
   constructor(props) {
@@ -38,13 +39,7 @@ export default class ScenarioList extends BaseComponent {
   render() {
     let scenarioItems = this.state.scenarios.map((scenario) => {
       return (
-        <Panel header={scenario.name}>
-          <form>
-            <Input type='text' label='Given' placeholder='Enter text' />
-            <Input type='text' label='When' placeholder='Enter text' />
-            <Input type='text' label='Then' placeholder='Enter text' />
-          </form>
-        </Panel>
+        <Scenario key={`scenario_${scenario.id}`} scenario={scenario} episodeId={this.props.episodeId} featureId={this.props.featureId} />
       );
     });
 

@@ -133,7 +133,16 @@ class BookDb {
     this.getFeature(episodeId, featureId, (err, feature) => {
       if (err) return callback(err);
 
-      let newScenario = {id: this._generateId(), name: 'scenario name', steps: {}};
+      let newScenario = {
+        id: this._generateId(),
+        name: 'scenario name',
+        steps: {
+          given: [{value:'',table:[]}],
+          when: [{value:'',table:[]}],
+          then: [{value:'',table:[]}]
+        }
+      };
+
       feature.scenarios.push(newScenario);
       this._saveBook((err) => {
         if (err) return callback(err);
@@ -142,19 +151,34 @@ class BookDb {
     });
   }
 
-  updateScenario(episodeId, featureId, scenarioId, data, callback) {
+  addStep(episodeId, featureId, scenarioId, stepCode, callback) {
     this.getFeature(episodeId, featureId, (err, feature) => {
       if (err) return callback(err);
 
-      let scenario = _.find(feature.scenarios, {id: scenarioId});
-      if (!scenario) return callback(new Error('Scenario not found'));
+      let scenarioDb = _.find(feature.scenarios, {id: scenarioId});
+      if (!scenarioDb) return callback(new Error('Scenario not found'));
 
-      scenario.name = data.name;
-      scenario.steps = data.steps;
+      let newStep = { value: '', table: [] };
+      scenarioDb.steps[stepCode].push(newStep);
 
       this._saveBook((err) => {
         if (err) return callback(err);
-        callback(null, scenario);
+        callback(null, scenarioDb);
+      });
+    });
+  }
+
+  setScenarioStepVal(episodeId, featureId, scenarioId, stepCode, stepIdx, newValue, callback) {
+    this.getFeature(episodeId, featureId, (err, feature) => {
+      if (err) return callback(err);
+
+      let scenarioDb = _.find(feature.scenarios, {id: scenarioId});
+      if (!scenarioDb) return callback(new Error('Scenario not found'));
+      scenarioDb.steps[stepCode][stepIdx].value = newValue;
+
+      this._saveBook((err) => {
+        if (err) return callback(err);
+        callback(null, scenarioDb);
       });
     });
   }

@@ -25,7 +25,7 @@ export default class FeatureList extends BaseComponent {
   render() {
 
     let featureItems = this.state.features.map((feature) => {
-      return <li><Link to='feature' params={{episodeId: this.props.episode.id, featureId: feature.id}}>{feature.name}</Link></li>
+      return <li key={`feature_${feature.id}`}><Link to='feature' params={{episodeId: this.props.episode.id, featureId: feature.id}}>{feature.name}</Link></li>
     });
 
     const title = (
