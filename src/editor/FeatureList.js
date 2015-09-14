@@ -15,9 +15,8 @@ export default class FeatureList extends BaseComponent {
   }
 
   newFeature() {
-    books.createFeature(this.props.episode.id, (err, episode) => {
-      let features = this.state.features;
-      //features.push({name: 'new feature'});
+    books.createFeature(this.props.episode.id, (err, features) => {
+      if (err) return alert('Error creating feature');
       this.setState({features});
     });
   }

@@ -47,7 +47,7 @@ class BookDb {
     this.book.episodes.push(newEpisode);
     this._saveBook((err) => {
       if (err) return callback(err);
-      callback(null, newEpisode);
+      callback(null, this.book.episodes);
     });
   }
 
@@ -97,7 +97,7 @@ class BookDb {
 
       this._saveBook((err) => {
         if (err) return callback(err);
-        callback(null, newFeature);
+        callback(null, episode.features);
       });
     });
   }

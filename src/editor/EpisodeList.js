@@ -19,9 +19,7 @@ export default class EpisodeList extends BaseComponent {
   }
 
   newEpisode() {
-    books.createEpisode((err, episode) => {
-      let episodes = this.state.episodes;
-      //episodes.push(episode); // this.state.episodes refer to same object in books, therefor push is not necessary
+    books.createEpisode((err, episodes) => {
       this.setState({episodes});
     });
   }
