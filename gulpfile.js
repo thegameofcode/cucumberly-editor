@@ -4,7 +4,7 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 
 var paths = {
-  src: 'src/**/*.js',
+  src: 'src/app.js',
   dist: 'dist/build'
 };
 
@@ -17,21 +17,18 @@ var vendors = [
 ];
 
 gulp.task('vendors', function () {
-  var stream = browserify({
-    debug: false,
-    require: vendors
-  });
-
-  stream.bundle()
+  return browserify({
+        debug: false,
+        require: vendors
+      })
+      .bundle()
       .pipe(source('vendors.js'))
       .pipe(gulp.dest(paths.dist));
-
-  return stream;
 });
 
 gulp.task('app', function() {
 
-  var stream = browserify({entries: './src/app.js', debug: false})
+  var stream = browserify({entries: paths.src, debug: true, node: true})
       .transform(babelify);
 
   vendors.forEach(function(vendor) {
@@ -46,5 +43,5 @@ gulp.task('app', function() {
 gulp.task('build', ['vendors', 'app']);
 
 gulp.task('watch', function() {
-  gulp.watch(paths.src, ['build']);
+  gulp.watch(paths.src, ['app']);
 });

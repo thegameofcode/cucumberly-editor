@@ -4,8 +4,9 @@ import Nedb from 'nedb';
 class BookDb {
 
   constructor() {
+    let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
     this.db =  new Nedb({
-      filename: 'cucumberly.db',//require('path').join(require('nw.gui').App.dataPath, 'cucumberly.db'), // TODO use the no browser version instead LocalStorage
+      filename: pathDb,
       autoload: true
     });
   }

@@ -43,14 +43,14 @@
     "page-cache": false
   },
   "devDependencies": {
-    "nw": "^0.12.3",
     "babelify": "^6.3.0",
     "browserify": "^11.0.1",
-    "vinyl-source-stream": "^1.1.0",
     "gulp": "^3.9.0",
     "gulp-watch": "^4.3.5",
     "jscs": "^2.1.1",
-    "jshint": "^2.8.0"
+    "jshint": "^2.8.0",
+    "nw": "^0.12.3",
+    "vinyl-source-stream": "^1.1.0"
   },
   "js-flags": "--harmony"
 }
