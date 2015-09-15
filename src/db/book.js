@@ -93,7 +93,7 @@ class BookDb {
     this._getEpisode(episodeId, (err, episode) => {
       if (err) return callback(err);
 
-      let newFeature = {id: this._generateId(), name: 'Feature name', description: {}, scenarios: []};
+      let newFeature = {id: this._generateId(), name: 'Feature name', description: {motivation: '', beneficiary: '', expectedBehaviour: ''}, scenarios: []};
       episode.features.push(newFeature);
 
       this._saveBook((err) => {
@@ -106,6 +106,7 @@ class BookDb {
   updateFeature(episodeId, featureId, data, callback) {
     this.getFeature(episodeId, featureId, (err, feature) => {
       if (err) return callback(err);
+      if (!feature) return callback(new Error('Feature not found'));
 
       feature.name = data.name;
       feature.description = data.description;

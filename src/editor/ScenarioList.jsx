@@ -10,7 +10,12 @@ export default class ScenarioList extends BaseComponent {
     super(props);
     super.bindMethods('newScenario');
 
-    this.state = {scenarios: []};
+    this.state = {scenarios: props.scenarios};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let scenarios = nextProps.scenarios;
+    this.setState({scenarios});
   }
 
   newScenario() {
@@ -19,21 +24,6 @@ export default class ScenarioList extends BaseComponent {
       scenarios.push(scenario);
       this.setState({scenarios});
     });
-  }
-
-  loadScenarios(episodeId, featureId) {
-    books.getFeature(episodeId, featureId, (err, feature) => {
-      let scenarios = feature.scenarios;
-      this.setState({scenarios});
-    });
-  }
-
-  componentDidMount() {
-    this.loadScenarios(this.props.episodeId, this.props.featureId);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.loadScenarios(nextProps.episodeId, nextProps.featureId);
   }
 
   render() {

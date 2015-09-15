@@ -4,7 +4,8 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 
 var paths = {
-  src: 'src/app.js',
+  entry: 'src/app.jsx',
+  src: 'src/**/*.{js,jsx}',
   dist: 'dist/build'
 };
 
@@ -28,7 +29,7 @@ gulp.task('vendors', function () {
 
 gulp.task('app', function() {
 
-  var stream = browserify({entries: paths.src, debug: true, node: true})
+  var stream = browserify({entries: paths.entry, debug: true, node: true, extensions: ['.jsx']})
       .transform(babelify);
 
   vendors.forEach(function(vendor) {
