@@ -1,9 +1,9 @@
 import React from 'react';
-import books from '../db/book';
 import BaseComponent from '../BaseComponent';
 import ScenarioList from './ScenarioList';
 
 import EditableLabel from '../ui/EditableLabel';
+import BookActions from '../actions/BookActions';
 
 import { Col } from 'react-bootstrap';
 
@@ -11,20 +11,6 @@ export default class Feature extends BaseComponent {
   constructor(props) {
     super(props);
     super.bindMethods('onFeatureChange');
-  }
-
-  loadFeature(episodeId, featureId) {
-    books.getFeature(episodeId, featureId, (err, feature) => {
-      this.setState({feature});
-    });
-  }
-
-  componentDidMount() {
-    this.loadFeature(this.props.params.episodeId, this.props.params.featureId);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.loadFeature(nextProps.params.episodeId, nextProps.params.featureId);
   }
 
   onFeatureChange() {
@@ -40,10 +26,7 @@ export default class Feature extends BaseComponent {
       }
     };
 
-    books.updateFeature(episodeId, featureId, featureData, (err, feature) => {
-      if (err) return alert('Error saving feature');
-      this.setState({feature});
-    });
+    BookActions.saveFeature(episodeId, featureId, featureData);
   }
 
   render() {

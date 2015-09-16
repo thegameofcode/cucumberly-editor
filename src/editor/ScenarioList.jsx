@@ -1,5 +1,5 @@
 import React from 'react';
-import books from '../db/book';
+import BookActions from '../actions/BookActions';
 import BaseComponent from '../BaseComponent';
 import Scenario from './Scenario';
 
@@ -9,8 +9,6 @@ export default class ScenarioList extends BaseComponent {
   constructor(props) {
     super(props);
     super.bindMethods('newScenario');
-
-    this.state = {scenarios: props.scenarios};
   }
 
   componentWillReceiveProps(nextProps) {
@@ -19,15 +17,11 @@ export default class ScenarioList extends BaseComponent {
   }
 
   newScenario() {
-    books.createScenario(this.props.episodeId, this.props.featureId, (err, scenario) => {
-      let scenarios = this.state.scenarios;
-      scenarios.push(scenario);
-      this.setState({scenarios});
-    });
+    BookActions.createScenario(this.props.episodeId, this.props.featureId);
   }
 
   render() {
-    let scenarioItems = this.state.scenarios.map((scenario) => {
+    let scenarioItems = this.props.scenarios.map((scenario) => {
       return (
         <Scenario key={`scenario_${scenario.id}`} scenario={scenario} episodeId={this.props.episodeId} featureId={this.props.featureId} />
       );

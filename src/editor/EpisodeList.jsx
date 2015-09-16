@@ -1,6 +1,6 @@
 import React from 'react';
-import books from '../db/book';
 import BaseComponent from '../BaseComponent';
+import BookActions from '../actions/BookActions';
 import FeatureList from './FeatureList';
 
 import { Col, Button } from 'react-bootstrap';
@@ -13,9 +13,7 @@ export default class EpisodeList extends BaseComponent {
   }
 
   newEpisode() {
-    books.createEpisode((err, episodes) => {
-      this.setState({episodes});
-    });
+    BookActions.createEpisode();
   }
 
   render() {

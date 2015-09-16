@@ -7,6 +7,11 @@ export default class EditableLabel extends BaseComponent {
     super.bindMethods('onFocus', 'onBlur', 'onKeyDown');
   }
 
+  componentDidMount() {
+    this.setText(this.props.initialText);
+    this.checkDefaultText();
+  }
+
   componentWillUpdate(nextProps, nextState) {
     this.setText(nextProps.initialText);
     this.checkDefaultText();

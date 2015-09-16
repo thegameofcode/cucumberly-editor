@@ -2,36 +2,33 @@ import React from 'react';
 import { Panel, Input } from 'react-bootstrap';
 import BaseComponent from '../BaseComponent';
 import Step from './Step';
-import books from '../db/book';
+import BookActions from '../actions/BookActions';
+import EditableLabel from '../ui/EditableLabel';
 
 export default class Scenario extends BaseComponent {
   constructor(props) {
     super(props);
-    super.bindMethods('onNewStep', 'onStepChange');
+    super.bindMethods('onNewStep', 'onStepChange', 'onScenarioChange');
+  }
 
-    this.state = {
-      scenario: props.scenario
-    };
+  onScenarioChange() {
+    let scenarioId = this.props.scenario.id;
+    let data = { name: this.refs.name.getText() };
+    BookActions.saveScenario(this.props.episodeId, this.props.featureId, scenarioId, data);
   }
 
   onNewStep(stepFrom) {
-    let scenarioId = this.state.scenario.id;
-    books.addStep(this.props.episodeId, this.props.featureId, scenarioId, stepFrom.props.step.code, (err, scenario) => {
-      if (err) return alert('Error saving scenario');
-      this.setState({ scenario: scenario })
-    });
+    let scenarioId = this.props.scenario.id;
+    BookActions.createStep(this.props.episodeId, this.props.featureId, scenarioId, stepFrom.props.step.code);
   }
 
   onStepChange(step, newValue) {
-    let scenarioId = this.state.scenario.id;
-    books.setScenarioStepVal(this.props.episodeId, this.props.featureId, scenarioId, step.code, step.idx, newValue, (err, scenario) => {
-      if (err) return alert('Error saving scenario');
-      this.setState({ scenario: scenario })
-    });
+    let scenarioId = this.props.scenario.id;
+    BookActions.saveStep(this.props.episodeId, this.props.featureId, scenarioId, step.code, step.idx, newValue);
   }
 
   render() {
-    let scenario = this.state.scenario;
+    let scenario = this.props.scenario;
     let stepNames = ['Given', 'When', 'Then'];
     let stepUis = [];
 
@@ -45,8 +42,10 @@ export default class Scenario extends BaseComponent {
       });
     });
 
+    let headerText = <EditableLabel ref='name' initialText={scenario.name} defaultText='Scenario name' onChange={this.onScenarioChange} />;
+
     return (
-      <Panel header={scenario.name}>
+      <Panel header={headerText}>
         <form>
           {stepUis}
         </form>

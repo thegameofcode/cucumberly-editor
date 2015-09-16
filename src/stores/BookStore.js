@@ -15,12 +15,11 @@ class BookStore {
 
   handleUpdateBook(book) {
     this.book = book;
-    // optionally return false to suppress the store change event
     this.err = null;
   }
 
   handleFetchBook() {
-    this.book = {name: '', description: '', episodes: []};
+    return false;
   }
 
   handleBookFailed(err) {

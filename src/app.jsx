@@ -35,7 +35,10 @@ class App extends Component {
   }
 
   render() {
-    console.log('App render state', this.state.book)
+    if (this.state.err) {
+      alert('ERROR: ' + this.state.err);
+    }
+
     return (
       <div>
         <Navbar brand='Cucumberly' inverse toggleNavKey={0}>

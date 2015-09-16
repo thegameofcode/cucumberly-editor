@@ -15,7 +15,8 @@ var vendors = [
   'react-router',
   'nedb',
   'lodash',
-  'alt'
+  'alt',
+  'shortid'
 ];
 
 gulp.task('vendors', function () {

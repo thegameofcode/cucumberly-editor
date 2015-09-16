@@ -1,7 +1,6 @@
 import React from 'react';
 import BaseComponent from '../BaseComponent';
 import { Input } from 'react-bootstrap';
-import books from '../db/book';
 
 export default class Scenario extends BaseComponent {
   constructor(props) {

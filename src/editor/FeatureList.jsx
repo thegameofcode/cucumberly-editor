@@ -1,5 +1,5 @@
 import React from 'react';
-import books from '../db/book';
+import BookActions from '../actions/BookActions';
 import BaseComponent from '../BaseComponent';
 import Router from 'react-router';
 import { Panel, Button } from 'react-bootstrap';
@@ -10,20 +10,15 @@ export default class FeatureList extends BaseComponent {
   constructor(props) {
     super(props);
     super.bindMethods('newFeature');
-
-    this.state = {features: props.episode.features};
   }
 
   newFeature() {
-    books.createFeature(this.props.episode.id, (err, features) => {
-      if (err) return alert('Error creating feature');
-      this.setState({features});
-    });
+    BookActions.createFeature(this.props.episode.id);
   }
 
   render() {
 
-    let featureItems = this.state.features.map((feature) => {
+    let featureItems = this.props.episode.features.map((feature) => {
       return <li key={`feature_${feature.id}`}><Link to='feature' params={{episodeId: this.props.episode.id, featureId: feature.id}}>{feature.name}</Link></li>
     });
 
@@ -42,4 +37,8 @@ export default class FeatureList extends BaseComponent {
 
 FeatureList.propTypes = {
   episode: React.PropTypes.object.isRequired
+};
+
+FeatureList.defaultProps = {
+  episode: {id:'', features: []}
 };
