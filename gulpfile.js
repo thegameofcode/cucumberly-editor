@@ -4,7 +4,7 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 
 var paths = {
-  entry: 'src/app.jsx',
+  entry: 'src/components/App.jsx',
   src: 'src/**/*.{js,jsx}',
   dist: 'dist/build'
 };

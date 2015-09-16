@@ -1,5 +1,5 @@
 import React from 'react';
-import BookActions from '../actions/BookActions';
+import BookActions from '../../actions/BookActions';
 import BaseComponent from '../BaseComponent';
 import Router from 'react-router';
 import { Panel, Button } from 'react-bootstrap';

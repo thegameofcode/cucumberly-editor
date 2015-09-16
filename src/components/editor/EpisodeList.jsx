@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseComponent from '../BaseComponent';
-import BookActions from '../actions/BookActions';
+import BookActions from '../../actions/BookActions';
 import FeatureList from './FeatureList';
 
 import { Col, Button } from 'react-bootstrap';

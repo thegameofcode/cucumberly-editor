@@ -1,5 +1,5 @@
 import React from 'react';
-import BookActions from '../actions/BookActions';
+import BookActions from '../../actions/BookActions';
 import BaseComponent from '../BaseComponent';
 import Scenario from './Scenario';
 

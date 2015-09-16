@@ -4,8 +4,8 @@ import Router from 'react-router';
 import Editor from './editor/Editor';
 import Feature from './editor/Feature';
 import Subjects from './subjects/Subjects';
-import BookStore from './stores/BookStore';
-import BookActions from './actions/BookActions';
+import BookStore from '../stores/BookStore';
+import BookActions from '../actions/BookActions';
 
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 

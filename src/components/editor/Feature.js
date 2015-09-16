@@ -3,7 +3,7 @@ import BaseComponent from '../BaseComponent';
 import ScenarioList from './ScenarioList';
 
 import EditableLabel from '../ui/EditableLabel';
-import BookActions from '../actions/BookActions';
+import BookActions from '../../actions/BookActions';
 
 import { Col } from 'react-bootstrap';
 

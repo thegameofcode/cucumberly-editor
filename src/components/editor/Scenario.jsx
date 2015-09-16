@@ -2,7 +2,7 @@ import React from 'react';
 import { Panel, Input } from 'react-bootstrap';
 import BaseComponent from '../BaseComponent';
 import Step from './Step';
-import BookActions from '../actions/BookActions';
+import BookActions from '../../actions/BookActions';
 import EditableLabel from '../ui/EditableLabel';
 
 export default class Scenario extends BaseComponent {
