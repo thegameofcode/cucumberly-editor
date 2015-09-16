@@ -10,12 +10,6 @@ export default class EpisodeList extends BaseComponent {
     super(props);
 
     super.bindMethods('newEpisode');
-    this.state = {episodes: []};
-
-    books.loadBook((err, book) => {
-      if (err) return alert('Error loading book');
-      this.setState({episodes: book.episodes});
-    });
   }
 
   newEpisode() {
@@ -25,7 +19,7 @@ export default class EpisodeList extends BaseComponent {
   }
 
   render() {
-    let episodeItems = this.state.episodes.map((episode) =>
+    let episodeItems = this.props.episodes.map((episode) =>
         <FeatureList key={`episode_${episode.id}`} episode={episode} />
     );
 
@@ -38,3 +32,7 @@ export default class EpisodeList extends BaseComponent {
     );
   }
 }
+
+EpisodeList.defaultProps = {
+  episodes: []
+};

@@ -31,6 +31,7 @@
     "min_height": 600
   },
   "dependencies": {
+    "alt": "^0.17.3",
     "lodash": "^3.10.1",
     "nedb": "^1.1.4",
     "react": "^0.13.3",

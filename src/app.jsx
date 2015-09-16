@@ -4,13 +4,38 @@ import Router from 'react-router';
 import Editor from './editor/Editor';
 import Feature from './editor/Feature';
 import Subjects from './subjects/Subjects';
+import BookStore from './stores/BookStore';
+import BookActions from './actions/BookActions';
 
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 let { Route, RouteHandler, DefaultRoute } = Router;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = BookStore.getState();
+    console.log('App state', this.state)
+  }
+
+  onBookStoreChange(state) {
+    console.log('onBookStoreChange', state)
+    this.setState(state);
+  }
+
+  componentDidMount() {
+    BookStore.listen(this.onBookStoreChange.bind(this));
+
+    BookActions.fetchBook();
+  }
+
+  componentWillUnmount() {
+    BookStore.unlisten(this.onBookStoreChange.bind(this));
+  }
+
   render() {
+    console.log('App render state', this.state.book)
     return (
       <div>
         <Navbar brand='Cucumberly' inverse toggleNavKey={0}>
@@ -19,7 +44,7 @@ class App extends Component {
             <NavItem eventKey={3} disabled>Subjects</NavItem>
           </Nav>
         </Navbar>
-        <RouteHandler/>
+        <RouteHandler book={this.state.book} />
       </div>
     );
   }

@@ -11,8 +11,8 @@ export default class Editor extends BaseComponent {
   render() {
     return (
       <Col md={12}>
-        <EpisodeList />
-        <RouteHandler />
+        <EpisodeList episodes={this.props.book.episodes} />
+        <RouteHandler book={this.props.book} />
       </Col>
     );
   }

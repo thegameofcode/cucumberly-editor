@@ -11,8 +11,6 @@ export default class Feature extends BaseComponent {
   constructor(props) {
     super(props);
     super.bindMethods('onFeatureChange');
-
-    this.state = {feature: {name: '', scenarios: [], description: {motivation: '', beneficiary: '', expectedBehaviour: ''}}};
   }
 
   loadFeature(episodeId, featureId) {
@@ -50,7 +48,11 @@ export default class Feature extends BaseComponent {
 
   render() {
     let episodeId = this.props.params.episodeId;
-    let feature = this.state.feature;
+    let episode = this.props.book.episodes.filter((episode) => episode.id === episodeId)[0];
+
+    let featureId = this.props.params.featureId;
+    let feature = episode.features.filter((feature) => feature.id === featureId)[0];
+
     let description = feature.description;
 
     return (
