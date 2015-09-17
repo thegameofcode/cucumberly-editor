@@ -3,6 +3,7 @@ import shortid from 'shortid';
 
 class BookSource {
   constructor() {
+    // TODO nw.js: set execution context to node app instead of web?
     //let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
     this.db =  new Nedb({
       //filename: pathDb,
@@ -165,15 +166,54 @@ class BookSource {
           return this.saveBook(book);
         });
   }
+
+  removeEpisode(episodeId) {
+    return this.fetch()
+        .then((book) => {
+          book.episodes = book.episodes.filter(episode => episode.id !== episodeId);
+          return this.saveBook(book);
+        });
+  }
+
+  saveEpisode(episode) {
+    return this.fetch()
+        .then((book) => {
+          let episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episode.id)[0];
+          if (!episodeDb) return Promise.reject(new Error('Episode not found'));
+          episodeDb.name = episode.name;
+          return this.saveBook(book);
+        });
+  }
+
+  removeFeature(episodeId, featureId) {
+    return this.fetch()
+        .then((book) => {
+          let episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episodeId)[0];
+          if (!episodeDb) return Promise.reject(new Error('Episode not found'));
+          episodeDb.features = episodeDb.features.filter(feature => feature.id !== featureId);
+          return this.saveBook(book);
+        });
+  }
+
+  removeScenario(episodeId, featureId, scenarioId) {
+    return this.fetch()
+        .then((book) => {
+          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          if (!episode) return Promise.reject(new Error('Episode not found'));
+
+          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          if (!feature) return Promise.reject(new Error('Feature not found'));
+
+          feature.scenarios = feature.scenarios.filter(scenario => scenario.id !== scenarioId);
+          return this.saveBook(book);
+        });
+  }
+
   /*
   TODO
    updateBook(data, callback) {
    this.book.title = data.title;
    this.book.description = data.description;
-   this._saveBook(callback);
-   }
-   removeEpisode(episodeId, callback) {
-   _.remove(this.book.episodes, {id: episodeId});
    this._saveBook(callback);
    }
    removeFeature(episodeId, featureId, callback) {

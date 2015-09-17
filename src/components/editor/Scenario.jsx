@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, Input } from 'react-bootstrap';
+import { Panel, Input, Button, Glyphicon } from 'react-bootstrap';
 import BaseComponent from '../BaseComponent';
 import Step from './Step';
 import BookActions from '../../actions/BookActions';
@@ -8,7 +8,7 @@ import EditableLabel from '../ui/EditableLabel';
 export default class Scenario extends BaseComponent {
   constructor(props) {
     super(props);
-    super.bindMethods('onNewStep', 'onStepChange', 'onScenarioChange');
+    super.bindMethods('onNewStep', 'onStepChange', 'onScenarioChange', 'removeScenario');
   }
 
   onScenarioChange() {
@@ -27,6 +27,10 @@ export default class Scenario extends BaseComponent {
     BookActions.saveStep(this.props.episodeId, this.props.featureId, scenarioId, step.code, step.idx, newValue);
   }
 
+  removeScenario() {
+    BookActions.removeScenario(this.props.episodeId, this.props.featureId, this.props.scenario.id);
+  }
+
   render() {
     let scenario = this.props.scenario;
     let stepNames = ['Given', 'When', 'Then'];
@@ -42,7 +46,12 @@ export default class Scenario extends BaseComponent {
       });
     });
 
-    let headerText = <EditableLabel ref='name' initialText={scenario.name} defaultText='Scenario name' onChange={this.onScenarioChange} />;
+    let headerText = (
+      <div>
+        <EditableLabel ref='name' initialText={scenario.name} defaultText='Scenario name' onChange={this.onScenarioChange} />
+        <Button bsSize='xsmall' className='pull-right' onClick={this.removeScenario}><Glyphicon glyph='remove' /></Button>
+      </div>
+    );
 
     return (
       <Panel header={headerText}>

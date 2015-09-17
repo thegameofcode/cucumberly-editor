@@ -41,7 +41,7 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar brand='Cucumberly' inverse toggleNavKey={0}>
+        <Navbar brand='Cucumberly' inverse fixedTop fluid toggleNavKey={0}>
           <Nav activeKey={1}>
             <NavItem eventKey={1} href='#/editor'>Editor</NavItem>
             <NavItem eventKey={3} disabled>Subjects</NavItem>

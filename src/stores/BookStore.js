@@ -8,7 +8,6 @@ class BookStore {
 
     this.bindListeners({
       handleUpdateBook: BookActions.UPDATE_BOOK,
-      handleFetchBook: BookActions.FETCH_BOOK,
       handleBookFailed: BookActions.BOOK_FAILED
     });
   }
@@ -16,10 +15,6 @@ class BookStore {
   handleUpdateBook(book) {
     this.book = book;
     this.err = null;
-  }
-
-  handleFetchBook() {
-    return false;
   }
 
   handleBookFailed(err) {
