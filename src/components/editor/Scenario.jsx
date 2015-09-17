@@ -22,9 +22,9 @@ export default class Scenario extends BaseComponent {
     BookActions.createStep(this.props.episodeId, this.props.featureId, scenarioId, stepFrom.props.step.code);
   }
 
-  onStepChange(step, newValue) {
+  onStepChange(stepCode, idx, data) {
     let scenarioId = this.props.scenario.id;
-    BookActions.saveStep(this.props.episodeId, this.props.featureId, scenarioId, step.code, step.idx, newValue);
+    BookActions.saveStep(this.props.episodeId, this.props.featureId, scenarioId, stepCode, idx, data);
   }
 
   removeScenario() {

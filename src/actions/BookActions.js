@@ -47,8 +47,8 @@ class BookActions {
         .catch(this.actions.bookFailed);
   }
 
-  saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, newValue) {
-    BookSource.saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, newValue)
+  saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, data) {
+    BookSource.saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, data)
         .then(book => this.actions.updateBook(book))
         .catch(this.actions.bookFailed);
   }

@@ -131,7 +131,7 @@ class BookSource {
         });
   }
 
-  saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, newValue) {
+  saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, data) {
     return this.fetch()
         .then((book) => {
           let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
@@ -143,7 +143,7 @@ class BookSource {
           let scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
           if (!scenario) return Promise.reject(new Error('Scenario not found'));
 
-          scenario.steps[stepCode][stepIdx].value = newValue;
+          scenario.steps[stepCode][stepIdx] = data;
 
           return this.saveBook(book);
         });

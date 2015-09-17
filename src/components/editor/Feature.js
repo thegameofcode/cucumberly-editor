@@ -30,6 +30,8 @@ export default class Feature extends BaseComponent {
   }
 
   render() {
+    if (!this.props.book.episodes) return <div>Loading...</div>;
+
     let episodeId = this.props.params.episodeId;
     let episode = this.props.book.episodes.filter((episode) => episode.id === episodeId)[0];
 
