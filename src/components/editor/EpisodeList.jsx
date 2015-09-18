@@ -22,7 +22,7 @@ export default class EpisodeList extends BaseComponent {
     );
 
     return (
-      <Col md={3}>
+      <Col md={3} className='episodeList'>
         <h3>Episodes</h3>
         <div>{episodeItems}</div>
         <Button onClick={this.newEpisode}>New Episode</Button>

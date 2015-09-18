@@ -1,0 +1,30 @@
+body {
+    padding-top: 70px;
+    background-color: #fff;
+}
+
+.episodeList {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    bottom: 10px;
+    overflow-y: auto;
+}
+
+.editableLabel:hover{
+    background: rgba(0,0,0,0.2);
+}
+
+.editableLabel:focus{
+    background: rgba(0,0,0,0.2);
+}
+
+.editableLabel {
+    border: 0;
+    background: none;
+    width: 60%;
+}
+
+.editableLabel.defaultVal {
+    border-bottom: 2px dotted #aaa;
+}

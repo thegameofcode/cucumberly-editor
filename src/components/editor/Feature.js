@@ -41,7 +41,7 @@ export default class Feature extends BaseComponent {
     let description = feature.description;
 
     return (
-      <Col md={8}>
+      <Col md={9} className='col-md-offset-3'>
         <EditableLabel ref='name' tag='h2' initialText={feature.name} defaultText='Feature name' onChange={this.onFeatureChange} />
 
         <p>

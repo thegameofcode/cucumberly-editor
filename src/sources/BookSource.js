@@ -208,31 +208,6 @@ class BookSource {
           return this.saveBook(book);
         });
   }
-
-  /*
-  TODO
-   updateBook(data, callback) {
-   this.book.title = data.title;
-   this.book.description = data.description;
-   this._saveBook(callback);
-   }
-   removeFeature(episodeId, featureId, callback) {
-   this._getEpisode(episodeId, (err, episode) => {
-   if (err) return callback(err);
-
-   _.remove(episode.features, {id: featureId});
-   this._saveBook(callback);
-   });
-   }
-   removeScenario(episodeId, featureId, scenarioId, callback) {
-   this.getFeature(episodeId, featureId, (err, feature) => {
-   if (err) return callback(err);
-
-   _.remove(feature.scenarios, {id: scenarioId});
-   this._saveBook(callback);
-   });
-   }
-  */
 }
 
 export default new BookSource();
