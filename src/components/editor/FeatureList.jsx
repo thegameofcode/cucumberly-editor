@@ -54,7 +54,7 @@ export default class FeatureList extends BaseComponent {
 
     return (
       <Panel header={header}>
-        <ListGroup>{featureItems}</ListGroup>
+        <ListGroup fill>{featureItems}</ListGroup>
         <Button onClick={this.newFeature}>New Feature</Button>
       </Panel>
     );

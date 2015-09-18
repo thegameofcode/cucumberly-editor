@@ -59,7 +59,7 @@ export default class EditableLabel extends BaseComponent {
       this.setText(this.previousText);
 
     } else if (this.props.onChange && text !== this.previousText) {
-      this.props.onChange();
+      this.props.onChange(text);
     }
 
     this.previousText = text;
