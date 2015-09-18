@@ -71,21 +71,25 @@ export default class StepTable extends BaseComponent {
     }
 
     let [header, ...rows] = this.table;
-    let headerRow = header.map((colName, colIdx) => (
-        <th key={`head_${colIdx}`}>
-          <EditableLabel initialText={colName} onChange={(text) => this.onRowChange(0, colIdx, text)} />
-          <Button bsSize='xsmall' bsStyle='link' className='pull-right' onClick={() => this.onRemoveCol(colIdx)}><Glyphicon glyph='remove' /></Button>
-        </th>
-    ));
+    let headerRow = header.map((colName, colIdx) => {
+      let removeBtn = (colIdx === 0) ? null : <Button bsSize='xsmall' bsStyle='link' className='pull-right' onClick={() => this.onRemoveCol(colIdx)}><Glyphicon glyph='remove' /></Button>;
+      return (
+          <th key={`head_${colIdx}`}>
+            <EditableLabel initialText={colName} onChange={(text) => this.onRowChange(0, colIdx, text)} />
+            {removeBtn}
+          </th>
+      )
+    });
 
     let bodyRows = rows.map((row, rowIdx) => {
       rowIdx++; // sum the header row
       let tds = row.map((rowText, colIdx) => <td key={`cell_${rowIdx}_${colIdx}`}><EditableLabel initialText={rowText} onChange={(text) => this.onRowChange(rowIdx, colIdx, text)} /></td>);
+      let removeBtn = (rowIdx === 1) ? null : <Button bsSize='xsmall' bsStyle='link' onClick={() => this.onRemoveRow(rowIdx)}><Glyphicon glyph='remove' /></Button>;
       return (
           <tr key={`row_${rowIdx}`}>
             {tds}
             <td className='text-center'>
-              <Button bsSize='xsmall' bsStyle='link' onClick={() => this.onRemoveRow(rowIdx)}><Glyphicon glyph='remove' /></Button>
+              {removeBtn}
             </td>
           </tr>
       );
