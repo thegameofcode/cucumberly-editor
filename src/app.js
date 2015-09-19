@@ -1,8 +1,10 @@
+'use babel';
+
 import app from 'app';
 import BrowserWindow from 'browser-window';
 import path from 'path';
 
-const INDEX_HTML = path.join(process.cwd(), 'dist/index.html');
+const INDEX_HTML = path.join(process.cwd(), 'src/index.html');
 const WINDOW_OPTS = {
   title: 'Cucumberly Editor',
   width: 1400,
@@ -12,30 +14,28 @@ const WINDOW_OPTS = {
   center: true
 };
 
-export default () => {
-  const debug = process.env.NODE_ENV !== 'production';
+const debug = process.env.NODE_ENV !== 'production';
 
-  let mainWindow = null;
+let mainWindow = null;
 
-  app.on('ready', () => {
-    mainWindow = new BrowserWindow(WINDOW_OPTS);
+app.on('ready', () => {
+  mainWindow = new BrowserWindow(WINDOW_OPTS);
 
-    mainWindow.loadUrl(`file://${INDEX_HTML}`);
-    mainWindow.show();
+  mainWindow.loadUrl(`file://${INDEX_HTML}`);
+  mainWindow.show();
 
-    if (debug) {
-      mainWindow.openDevTools({/* detach:true */});
-    }
+  if (debug) {
+    mainWindow.openDevTools({/* detach:true */});
+  }
 
-    mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
+});
 
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
-};
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 

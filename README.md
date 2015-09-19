@@ -5,16 +5,10 @@ Cucumberly is a cucumber features editor but for "Muggles".
 
 Dependencies installation:
 ```sh
-bower install
 npm install
 ```
 
-Transpiling ES6 to ES5:
-```sh
-npm run build
-```
-
-Run the nw.js app:
+Run the app:
 ```sh
 npm start
 ```
