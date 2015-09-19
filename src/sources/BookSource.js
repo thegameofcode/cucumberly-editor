@@ -2,11 +2,12 @@ import Nedb from 'nedb';
 import shortid from 'shortid';
 
 class BookSource {
+
   constructor() {
     // TODO nw.js: set execution context to node app instead of web?
-    //let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
+    // let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
     this.db =  new Nedb({
-      //filename: pathDb,
+      // filename: pathDb,
       filename: 'cucumberly.book',
       autoload: true
     });
@@ -19,10 +20,8 @@ class BookSource {
 
         if (bookDb) {
           resolve(bookDb);
-
         } else {
-          console.log('Book not found, creating...');
-          let defaultBook = {title: '', description: '', episodes: []};
+          const defaultBook = {title: '', description: '', episodes: []};
           this.db.insert(defaultBook, (err, bookDb) => {
             if (err) return reject(err);
             resolve(bookDb);
@@ -35,10 +34,10 @@ class BookSource {
   saveFeature(episodeId, featureId, episodeData) {
     return this.fetch()
       .then((book) => {
-        let episode = book.episodes.filter((episode) => episode.id === episodeId)[0];
+        const episode = book.episodes.filter((episode) => episode.id === episodeId)[0];
         if (!episode) return reject(new Error('Episode not found'));
 
-        let feature = episode.features.filter((feature) => feature.id === featureId)[0];
+        const feature = episode.features.filter((feature) => feature.id === featureId)[0];
         if (!feature) return reject(new Error('Feature not found'));
 
         feature.name = episodeData.name;
@@ -67,8 +66,8 @@ class BookSource {
   createEpisode() {
     return this.fetch()
         .then((book) => {
-          let newEpisode = {
-            id: shortid.generate(), name: 'Episode name', features: [], tags:[]
+          const newEpisode = {
+            id: shortid.generate(), name: 'Episode name', features: [], tags: []
           };
           book.episodes.push(newEpisode);
           return this.saveBook(book);
@@ -78,10 +77,10 @@ class BookSource {
   createFeature(episodeId) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let newFeature = {id: shortid.generate(), name: 'Feature name', description: {motivation: '', beneficiary: '', expectedBehaviour: ''}, scenarios: []};
+          const newFeature = {id: shortid.generate(), name: 'Feature name', description: {motivation: '', beneficiary: '', expectedBehaviour: ''}, scenarios: []};
           episode.features.push(newFeature);
 
           return this.saveBook(book);
@@ -91,19 +90,19 @@ class BookSource {
   createScenario(episodeId, featureId) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          const feature = episode.features.filter(feature => feature.id === featureId)[0];
           if (!feature) return Promise.reject(new Error('Feature not found'));
 
-          let newScenario = {
+          const newScenario = {
             id: shortid.generate(),
             name: 'scenario name',
             steps: {
-              given: [{value:'',table:[]}],
-              when: [{value:'',table:[]}],
-              then: [{value:'',table:[]}]
+              given: [{value: '', table: []}],
+              when: [{value: '', table: []}],
+              then: [{value: '', table: []}]
             }
           };
           feature.scenarios.push(newScenario);
@@ -115,16 +114,16 @@ class BookSource {
   createStep(episodeId, featureId, scenarioId, stepCode) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          const feature = episode.features.filter(feature => feature.id === featureId)[0];
           if (!feature) return Promise.reject(new Error('Feature not found'));
 
-          let scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
+          const scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
           if (!scenario) return Promise.reject(new Error('Scenario not found'));
 
-          let newStep = { value: '', table: [] };
+          const newStep = { value: '', table: [] };
           scenario.steps[stepCode].push(newStep);
 
           return this.saveBook(book);
@@ -134,13 +133,13 @@ class BookSource {
   saveStep(episodeId, featureId, scenarioId, stepCode, stepIdx, data) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          const feature = episode.features.filter(feature => feature.id === featureId)[0];
           if (!feature) return Promise.reject(new Error('Feature not found'));
 
-          let scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
+          const scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
           if (!scenario) return Promise.reject(new Error('Scenario not found'));
 
           scenario.steps[stepCode][stepIdx] = data;
@@ -152,13 +151,13 @@ class BookSource {
   saveScenario(episodeId, featureId, scenarioId, data) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          const feature = episode.features.filter(feature => feature.id === featureId)[0];
           if (!feature) return Promise.reject(new Error('Feature not found'));
 
-          let scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
+          const scenario = feature.scenarios.filter(scenario => scenario.id === scenarioId)[0];
           if (!scenario) return Promise.reject(new Error('Scenario not found'));
 
           scenario.name = data.name;
@@ -178,7 +177,7 @@ class BookSource {
   saveEpisode(episode) {
     return this.fetch()
         .then((book) => {
-          let episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episode.id)[0];
+          const episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episode.id)[0];
           if (!episodeDb) return Promise.reject(new Error('Episode not found'));
           episodeDb.name = episode.name;
           return this.saveBook(book);
@@ -188,7 +187,7 @@ class BookSource {
   removeFeature(episodeId, featureId) {
     return this.fetch()
         .then((book) => {
-          let episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episodeId)[0];
+          const episodeDb = book.episodes.filter(episodeDb => episodeDb.id === episodeId)[0];
           if (!episodeDb) return Promise.reject(new Error('Episode not found'));
           episodeDb.features = episodeDb.features.filter(feature => feature.id !== featureId);
           return this.saveBook(book);
@@ -198,10 +197,10 @@ class BookSource {
   removeScenario(episodeId, featureId, scenarioId) {
     return this.fetch()
         .then((book) => {
-          let episode = book.episodes.filter(episode => episode.id === episodeId)[0];
+          const episode = book.episodes.filter(episode => episode.id === episodeId)[0];
           if (!episode) return Promise.reject(new Error('Episode not found'));
 
-          let feature = episode.features.filter(feature => feature.id === featureId)[0];
+          const feature = episode.features.filter(feature => feature.id === featureId)[0];
           if (!feature) return Promise.reject(new Error('Feature not found'));
 
           feature.scenarios = feature.scenarios.filter(scenario => scenario.id !== scenarioId);

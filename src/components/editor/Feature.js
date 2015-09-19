@@ -14,10 +14,10 @@ export default class Feature extends BaseComponent {
   }
 
   onFeatureChange() {
-    let episodeId = this.props.params.episodeId;
-    let featureId = this.props.params.featureId;
+    const episodeId = this.props.params.episodeId;
+    const featureId = this.props.params.featureId;
 
-    let featureData = {
+    const featureData = {
       name: this.refs.name.getText(),
       description: {
         motivation: this.refs.motivation.getText(),
@@ -30,24 +30,26 @@ export default class Feature extends BaseComponent {
   }
 
   render() {
-    if (!this.props.book.episodes) return <div>Loading...</div>;
+    if (!this.props.book.episodes) {
+      return <div>Loading...</div>;
+    }
 
-    let episodeId = this.props.params.episodeId;
-    let episode = this.props.book.episodes.filter((episode) => episode.id === episodeId)[0];
+    const episodeId = this.props.params.episodeId;
+    const episode = this.props.book.episodes.filter((ep) => ep.id === episodeId)[0];
 
-    let featureId = this.props.params.featureId;
-    let feature = episode.features.filter((feature) => feature.id === featureId)[0];
+    const featureId = this.props.params.featureId;
+    const feature = episode.features.filter((f) => f.id === featureId)[0];
 
-    let description = feature.description;
+    const description = feature.description;
 
     return (
       <Col md={9} className='col-md-offset-3'>
         <EditableLabel ref='name' tag='h2' initialText={feature.name} defaultText='Feature name' onChange={this.onFeatureChange} />
 
         <p>
-          <span>In order to </span><EditableLabel ref="motivation" initialText={description.motivation} onChange={this.onFeatureChange} /><br/>
-          <span>As a </span><EditableLabel ref="beneficiary" initialText={description.beneficiary} onChange={this.onFeatureChange} /><br/>
-          <span>I want to </span><EditableLabel ref="expectedBehaviour" initialText={description.expectedBehaviour} onChange={this.onFeatureChange} />
+          <span>In order to </span><EditableLabel ref='motivation' initialText={description.motivation} onChange={this.onFeatureChange} /><br/>
+          <span>As a </span><EditableLabel ref='beneficiary' initialText={description.beneficiary} onChange={this.onFeatureChange} /><br/>
+          <span>I want to </span><EditableLabel ref='expectedBehaviour' initialText={description.expectedBehaviour} onChange={this.onFeatureChange} />
         </p>
 
         <ScenarioList episodeId={episodeId} featureId={feature.id} scenarios={feature.scenarios} />
