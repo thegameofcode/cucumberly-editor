@@ -14,10 +14,8 @@ class BookSource {
     return new Promise((resolve, reject) => {
       this.db.findOne({}, (err, bookDb) => {
         if (err) return reject(err);
-
         if (bookDb) {
           resolve(bookDb);
-
         } else {
           console.log('Book not found, creating...');
           let defaultBook = {title: '', description: '', episodes: []};
@@ -66,7 +64,7 @@ class BookSource {
     return this.fetch()
         .then((book) => {
           let newEpisode = {
-            id: shortid.generate(), name: 'Episode name', features: [], tags:[]
+            id: shortid.generate(), name: 'Episode name', features: [], tags: []
           };
           book.episodes.push(newEpisode);
           return this.saveBook(book);
@@ -99,9 +97,9 @@ class BookSource {
             id: shortid.generate(),
             name: 'scenario name',
             steps: {
-              given: [{value:'',table:[]}],
-              when: [{value:'',table:[]}],
-              then: [{value:'',table:[]}]
+              given: [{value: '', table: []}],
+              when: [{value: '', table: []}],
+              then: [{value: '', table: []}]
             }
           };
           feature.scenarios.push(newScenario);
