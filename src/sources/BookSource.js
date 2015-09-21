@@ -3,11 +3,9 @@ import shortid from 'shortid';
 
 class BookSource {
   constructor() {
-    // TODO nw.js: set execution context to node app instead of web?
-    //let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
+    let pathDb = require('path').join(window.require('nw.gui').App.dataPath, 'cucumberly.db');
     this.db =  new Nedb({
-      //filename: pathDb,
-      filename: 'cucumberly.book',
+      filename: pathDb,
       autoload: true
     });
   }

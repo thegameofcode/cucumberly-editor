@@ -12,15 +12,19 @@ var paths = {
 var vendors = [
   'react',
   'react-bootstrap',
-  'react-router',
-  'nedb',
-  'lodash',
-  'alt',
-  'shortid'
+  'react-router'
 ];
 
 var externals = [
-  'manager/*.js', 'shortid', 'mkdirp', 'nunjucks', 'fs'
+  'manager/*.js',
+  'shortid',
+  'mkdirp',
+  'nunjucks',
+  'fs',
+  'shortid',
+  'nedb',
+  'path',
+  'alt'
 ];
 
 gulp.task('vendors', function () {
