@@ -27,5 +27,4 @@ build/Release
 node_modules
 
 .idea
-dist/build
-dist/lib
+dist/

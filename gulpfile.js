@@ -19,6 +19,10 @@ var vendors = [
   'shortid'
 ];
 
+var externals = [
+  'manager/*.js', 'shortid', 'mkdirp', 'nunjucks', 'fs'
+];
+
 gulp.task('vendors', function () {
   return browserify({
         debug: false,
@@ -38,13 +42,33 @@ gulp.task('app', function() {
     stream.external(vendor);
   });
 
+  externals.forEach(function(external) {
+    stream.external(external);
+  });
+
   return stream.bundle()
     .pipe(source('cucumberly.js'))
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('build', ['vendors', 'app']);
+gulp.task('copy:index', function(){
+  return gulp.src(['src/index.html']).pipe(gulp.dest('dist'));
+});
+
+gulp.task('copy:manager', function(){
+  return gulp.src(['src/manager/**']).pipe(gulp.dest('dist/manager'));
+});
+
+gulp.task('copy:styles', function(){
+  return gulp.src(['src/styles/**']).pipe(gulp.dest('dist/styles'));
+});
+
+gulp.task('build', ['vendors', 'app', 'copy:index', 'copy:manager', 'copy:styles']);
 
 gulp.task('watch', function() {
+  gulp.watch('src/**/*.*', ['build']);
+});
+
+gulp.task('watch:app', function() {
   gulp.watch(paths.src, ['app']);
 });
