@@ -5,11 +5,10 @@ Cucumberly is a cucumber features editor but for "Muggles".
 
 Dependencies installation:
 ```sh
-bower install
 npm install
 ```
 
-Transpiling ES6 to ES5:
+Generate `dist` folder and transpiling ES6 to ES5:
 ```sh
 npm run build
 ```
