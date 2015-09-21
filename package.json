@@ -33,9 +33,11 @@
   "dependencies": {
     "alt": "^0.17.3",
     "lodash": "^3.10.1",
+    "mkdirp": "^0.5.1",
     "nedb": "^1.1.4",
+    "nunjucks": "^2.0.0",
     "react": "^0.13.3",
-    "react-bootstrap": "^0.25.1",
+    "react-bootstrap": "^0.25.2",
     "react-router": "^0.13.3",
     "shortid": "^2.2.2"
   },
