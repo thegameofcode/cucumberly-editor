@@ -1,0 +1,16 @@
+{
+  "ecmaFeatures": {
+      "blockBindings": true,
+      "jsx": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": 0,
+    "jsx-quotes": [2, "prefer-single"],
+    "react/jsx-quotes": [2, "single"],
+    "react/prop-types": 1,
+    "no-shadow": 1,
+    "prefer-const": 1,
+    "padded-blocks": 0
+  }
+}

@@ -45,9 +45,9 @@ export default class Feature extends BaseComponent {
         <EditableLabel ref='name' tag='h2' initialText={feature.name} defaultText='Feature name' onChange={this.onFeatureChange} />
 
         <p>
-          <span>In order to </span><EditableLabel ref="motivation" initialText={description.motivation} onChange={this.onFeatureChange} /><br/>
-          <span>As a </span><EditableLabel ref="beneficiary" initialText={description.beneficiary} onChange={this.onFeatureChange} /><br/>
-          <span>I want to </span><EditableLabel ref="expectedBehaviour" initialText={description.expectedBehaviour} onChange={this.onFeatureChange} />
+          <span>In order to </span><EditableLabel ref='motivation' initialText={description.motivation} onChange={this.onFeatureChange} /><br/>
+          <span>As a </span><EditableLabel ref='beneficiary' initialText={description.beneficiary} onChange={this.onFeatureChange} /><br/>
+          <span>I want to </span><EditableLabel ref='expectedBehaviour' initialText={description.expectedBehaviour} onChange={this.onFeatureChange} />
         </p>
 
         <ScenarioList episodeId={episodeId} featureId={feature.id} scenarios={feature.scenarios} />
