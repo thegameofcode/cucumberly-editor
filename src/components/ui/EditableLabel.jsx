@@ -27,6 +27,7 @@ export default class EditableLabel extends BaseComponent {
 
   setText(text) {
     this.getElement().textContent = text;
+    this.previousText = text;
   }
 
   checkDefaultText() {
